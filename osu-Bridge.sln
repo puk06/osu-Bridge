@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-Bridge.Core", "osu-Bridge.Core\osu-Bridge.Core.csproj", "{AC2B3D86-19AB-44B6-95C5-25F732EC0460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-Bridge.Cui", "osu-Bridge.Console\osu-Bridge.Cui.csproj", "{D7E4C920-6F56-4E89-BEEF-97FF00463B60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-Bridge.Console", "osu-Bridge.Console\osu-Bridge.Console.csproj", "{D7E4C920-6F56-4E89-BEEF-97FF00463B60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu-Bridge.WinForm", "osu-Bridge.WinForm\osu-Bridge.WinForm.csproj", "{517EDBF4-DBEF-4E18-B2F9-F7109B61F253}"
 EndProject
