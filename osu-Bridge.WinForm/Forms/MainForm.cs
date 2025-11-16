@@ -50,6 +50,18 @@ public partial class MainForm : Form
         RefleshData(true);
     }
 
+    private void OpenFolderButton_Click(object sender, EventArgs e)
+    {
+        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog()
+        {
+            UseDescriptionForTitle = true,
+            Description = "osu!.exeが入っているフォルダを選択してください。"
+        };
+        if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
+
+        osuFolderTextBox.Text = folderBrowserDialog.SelectedPath;
+    }
+
     private void GenerateServer_Click(object sender, EventArgs e)
     {
         int index = osuBridge.CreateServer();

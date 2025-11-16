@@ -41,6 +41,7 @@
             label4 = new Label();
             openFolderButton = new Button();
             removeButton = new Button();
+            label5 = new Label();
             SuspendLayout();
             // 
             // launchButton
@@ -58,9 +59,9 @@
             // 
             settingsPanels.AutoScroll = true;
             settingsPanels.BackColor = SystemColors.Control;
-            settingsPanels.Location = new Point(309, 12);
+            settingsPanels.Location = new Point(309, 40);
             settingsPanels.Name = "settingsPanels";
-            settingsPanels.Size = new Size(343, 419);
+            settingsPanels.Size = new Size(343, 391);
             settingsPanels.TabIndex = 1;
             // 
             // label1
@@ -165,6 +166,7 @@
             openFolderButton.TabIndex = 11;
             openFolderButton.Text = "開く";
             openFolderButton.UseVisualStyleBackColor = true;
+            openFolderButton.Click += OpenFolderButton_Click;
             // 
             // removeButton
             // 
@@ -177,11 +179,22 @@
             removeButton.UseVisualStyleBackColor = true;
             removeButton.Click += RemoveButton_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, 128);
+            label5.Location = new Point(309, 9);
+            label5.Name = "label5";
+            label5.Size = new Size(86, 28);
+            label5.TabIndex = 13;
+            label5.Text = "プロパティ";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(664, 487);
+            Controls.Add(label5);
             Controls.Add(removeButton);
             Controls.Add(openFolderButton);
             Controls.Add(label4);
@@ -218,5 +231,6 @@
         private Label label4;
         private Button openFolderButton;
         private Button removeButton;
+        private Label label5;
     }
 }
