@@ -10,5 +10,6 @@ public class Server
 
     [UIField("サーバーエンドポイント")]
     [ConfigParameter("CredentialEndpoint")]
+    [PlaceHolder("Bancho")]
     public string ServerEndpoint { get; set; } = string.Empty;
 }

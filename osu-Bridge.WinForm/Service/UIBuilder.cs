@@ -76,6 +76,10 @@ internal static class UIBuilder
                 };
 
                 if (Attribute.IsDefined(prop, typeof(ConfidentialAttribute))) ((TextBox)input).PasswordChar = '*';
+                if (prop.GetCustomAttributes(typeof(PlaceHolderAttribute), false).FirstOrDefault() is PlaceHolderAttribute placeHolderAttribute)
+                {
+                    ((TextBox)input).PlaceholderText = placeHolderAttribute.PlaceHolderText;
+                }
 
                 ((TextBox)input).TextChanged += (s, e) => OnTextPropertyChanged((TextBox)input, prop, target);
             }

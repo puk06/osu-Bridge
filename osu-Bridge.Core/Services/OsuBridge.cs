@@ -167,7 +167,7 @@ public class OsuBridge(string databasePath)
 
         if (SelectedProfile != null)
         {
-            if (SelectedProfile.ChangeServer && !string.IsNullOrEmpty(SelectedProfile.ServerProfileName))
+            if (SelectedProfile.ChangeServer && SelectedProfile.ServerProfileName != string.Empty)
             {
                 var server = _servers.FirstOrDefault(s => s.Name == SelectedProfile.ServerProfileName);
                 if (server != null)
@@ -183,7 +183,7 @@ public class OsuBridge(string databasePath)
         _processStartInfo.Arguments = string.Empty;
         if (SelectedServer != null && SelectedServer.ServerEndpoint != string.Empty)
         {
-            _processStartInfo.Arguments = "-devserver " + _servers[_selectedServerIndex].ServerEndpoint;
+            _processStartInfo.Arguments = "-devserver " + SelectedServer.ServerEndpoint;
         }
 
         beforeLaunch?.Invoke();
