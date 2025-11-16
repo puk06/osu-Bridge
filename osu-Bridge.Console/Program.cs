@@ -32,167 +32,23 @@ class Program
         }
     }
 
-    static void HandleCommand(string command, OsuBridge osuBridge)
+    private static void HandleCommand(string command, OsuBridge osuBridge)
     {
         try
         {
             var parts = command.Split(' ');
+
             switch (parts[0].ToLower())
             {
-                case "load":
-                    {
-                        osuBridge.Load();
-                        break;
-                    }
-                case "create":
-                    {
-                        if (parts[1].StartsWith('p'))
-                        {
-                            var profileIndex = osuBridge.CreateProfile();
-                            Console.WriteLine("Profile Successfully Created!\nProfile Index: {0}\n", profileIndex);
-                            osuBridge.SelectProfile(profileIndex);
-                        }
-                        else if (parts[1].StartsWith('s'))
-                        {
-                            var serverIndex = osuBridge.CreateProfile();
-                            Console.WriteLine("Server Successfully Created!\nServer Index: {0}\n", serverIndex);
-                            osuBridge.SelectServer(serverIndex);
-                        }
-
-                        break;
-                    }
-
-                case "select":
-                    {
-                        if (parts[1].StartsWith('p'))
-                        {
-                            try
-                            {
-                                var profileIndex = int.Parse(parts[2]);
-                                var profile = osuBridge.SelectProfile(profileIndex);
-                                if (profile == null)
-                                {
-                                    Console.WriteLine("Profile Selection Failed...");
-                                    return;
-                                }
-
-                                Console.WriteLine("Profile Successfully Selected!\nProfile Name: {0}\n", profile.ProfileName);
-                            }
-                            catch
-                            {
-                                Console.WriteLine("Command Error!");
-                            }
-                        }
-                        else if (parts[1].StartsWith('s'))
-                        {
-                            try
-                            {
-                                var serverIndex = int.Parse(parts[2]);
-                                var server = osuBridge.SelectServer(serverIndex);
-                                if (server == null)
-                                {
-                                    Console.WriteLine("Server Selection Failed...");
-                                    return;
-                                }
-
-                                Console.WriteLine("server Successfully Selected!\nserver Name: {0}\n", server.Name);
-                            }
-                            catch
-                            {
-                                Console.WriteLine("Command Error!");
-                            }
-                        }
-
-                        break;
-                    }
-
-                case "setfolder":
-                    {
-                        osuBridge.SetOsuFolder(parts[1]);
-                        Console.WriteLine("osu! Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuFolderPath);
-                        break;
-                    }
-
-                case "launch":
-                    {
-                        Console.WriteLine("Launching osu!...");
-                        osuBridge.Launch();
-                        break;
-                    }
-                case "save":
-                    {
-                        osuBridge.Save();
-                        Console.WriteLine("Configuration Saved!");
-                    }
-                    break;
-
-                case "edit":
-                    {
-                        if (parts[1].StartsWith('p'))
-                        {
-                            bool result = osuBridge.EditProfile(parts[2], parts[3]);
-
-                            if (result)
-                            {
-                                Console.WriteLine("Profile Successfully Edited!\n");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Profile Edit Failed...!\n");
-                            }
-                        }
-                        else if (parts[1].StartsWith('s'))
-                        {
-                            bool result = osuBridge.EditServer(parts[2], parts[3]);
-
-                            if (result)
-                            {
-                                Console.WriteLine("Server Successfully Edited!\n");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Server Edit Failed...!\n");
-                            }
-                        }
-
-                        break;
-                    }
-
-                case "remove":
-                    {
-                        if (parts[1].StartsWith('p'))
-                        {
-                            bool result = osuBridge.RemoveProfile(int.Parse(parts[2]));
-
-                            if (result)
-                            {
-                                Console.WriteLine("Profile Successfully Removed!\n");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Profile Remove Failed...!\n");
-                            }
-                        }
-                        else if (parts[1].StartsWith('s'))
-                        {
-                            bool result = osuBridge.RemoveServer(int.Parse(parts[2]));
-
-                            if (result)
-                            {
-                                Console.WriteLine("Server Successfully Removed!\n");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Server Remove Failed...!\n");
-                            }
-                        }
-
-                        break;
-                    }
-
-                default:
-                    Console.WriteLine("Unknown command: " + command);
-                    break;
+                case "load": LoadCommand(osuBridge, parts); break;
+                case "create": CreateCommand(osuBridge, parts); break;
+                case "select": SelectCommand(osuBridge, parts); break;
+                case "setfolder": SetFolderCommand(osuBridge, parts); break;
+                case "launch": LaunchCommand(osuBridge, parts); break;
+                case "save": SaveCommand(osuBridge, parts); break;
+                case "edit": EditCommand(osuBridge, parts); break;
+                case "remove": RemoveCommand(osuBridge, parts); break;
+                default: Console.WriteLine("Unknown command: " + command); break;
             }
         }
         catch (Exception ex)
@@ -200,4 +56,140 @@ class Program
             Console.WriteLine("Command Error!" + ex);
         }
     }
+
+    #region Commands
+    private static void LoadCommand(OsuBridge osuBridge, string[] args)
+    {
+        osuBridge.Load();
+    }
+    private static void CreateCommand(OsuBridge osuBridge, string[] args)
+    {
+        if (args[1].StartsWith('p'))
+        {
+            var profileIndex = osuBridge.CreateProfile();
+            Console.WriteLine("Profile Successfully Created!\nProfile Index: {0}\n", profileIndex);
+            osuBridge.SelectProfile(profileIndex);
+        }
+        else if (args[1].StartsWith('s'))
+        {
+            var serverIndex = osuBridge.CreateProfile();
+            Console.WriteLine("Server Successfully Created!\nServer Index: {0}\n", serverIndex);
+            osuBridge.SelectServer(serverIndex);
+        }
+    }
+    private static void SelectCommand(OsuBridge osuBridge, string[] args)
+    {
+        if (args[1].StartsWith('p'))
+        {
+            try
+            {
+                var profileIndex = int.Parse(args[2]);
+                var profile = osuBridge.SelectProfile(profileIndex);
+                if (profile == null)
+                {
+                    Console.WriteLine("Profile Selection Failed...");
+                    return;
+                }
+
+                Console.WriteLine("Profile Successfully Selected!\nProfile Name: {0}\n", profile.ProfileName);
+            }
+            catch
+            {
+                Console.WriteLine("Command Error!");
+            }
+        }
+        else if (args[1].StartsWith('s'))
+        {
+            try
+            {
+                var serverIndex = int.Parse(args[2]);
+                var server = osuBridge.SelectServer(serverIndex);
+                if (server == null)
+                {
+                    Console.WriteLine("Server Selection Failed...");
+                    return;
+                }
+
+                Console.WriteLine("server Successfully Selected!\nserver Name: {0}\n", server.Name);
+            }
+            catch
+            {
+                Console.WriteLine("Command Error!");
+            }
+        }
+    }
+    private static void SetFolderCommand(OsuBridge osuBridge, string[] args)
+    {
+        osuBridge.SetOsuFolder(args[1]);
+        Console.WriteLine("osu! Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuFolderPath);
+    }
+    private static void LaunchCommand(OsuBridge osuBridge, string[] args)
+    {
+        Console.WriteLine("Launching osu!...");
+        osuBridge.Launch();
+    }
+    private static void SaveCommand(OsuBridge osuBridge, string[] args)
+    {
+        osuBridge.Save();
+        Console.WriteLine("Configuration Saved!");
+    }
+    private static void EditCommand(OsuBridge osuBridge, string[] args)
+    {
+        if (args[1].StartsWith('p'))
+        {
+            bool result = osuBridge.EditProfile(args[2], args[3]);
+
+            if (result)
+            {
+                Console.WriteLine("Profile Successfully Edited!\n");
+            }
+            else
+            {
+                Console.WriteLine("Profile Edit Failed...!\n");
+            }
+        }
+        else if (args[1].StartsWith('s'))
+        {
+            bool result = osuBridge.EditServer(args[2], args[3]);
+
+            if (result)
+            {
+                Console.WriteLine("Server Successfully Edited!\n");
+            }
+            else
+            {
+                Console.WriteLine("Server Edit Failed...!\n");
+            }
+        }
+    }
+    private static void RemoveCommand(OsuBridge osuBridge, string[] args)
+    {
+        if (args[1].StartsWith('p'))
+        {
+            bool result = osuBridge.RemoveProfile(int.Parse(args[2]));
+
+            if (result)
+            {
+                Console.WriteLine("Profile Successfully Removed!\n");
+            }
+            else
+            {
+                Console.WriteLine("Profile Remove Failed...!\n");
+            }
+        }
+        else if (args[1].StartsWith('s'))
+        {
+            bool result = osuBridge.RemoveServer(int.Parse(args[2]));
+
+            if (result)
+            {
+                Console.WriteLine("Server Successfully Removed!\n");
+            }
+            else
+            {
+                Console.WriteLine("Server Remove Failed...!\n");
+            }
+        }
+    }
+    #endregion
 }
