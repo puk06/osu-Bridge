@@ -3,7 +3,7 @@ using osu_Bridge.Core.Services;
 using osu_Bridge.Core.Utils;
 using osu_Bridge.WinForm.Models;
 using osu_Bridge.WinForm.Service;
-using System.Runtime.InteropServices;
+using osu_Bridge.WinForm.Utils;
 
 namespace osu_Bridge.WinForm.Forms;
 
@@ -17,7 +17,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
 
-        osuBridge = new("./database.json");
+        osuBridge = new("database.json");
         osuBridge.Load();
 
         RefleshData(true);
@@ -41,6 +41,7 @@ public partial class MainForm : Form
     private void OsuFolderTextBox_TextChanged(object sender, EventArgs e)
     {
         osuBridge.SetOsuFolder(osuFolderTextBox.Text);
+        GenerateSkinsList(LoadSkins());
     }
 
     private void LaunchButton_Click(object sender, EventArgs e)
@@ -102,17 +103,7 @@ public partial class MainForm : Form
         if (profile == null || !profile.PasswordAutoCopy) return;
 
         if (profile.Password != string.Empty)
-        {
-            try
-            {
-                Clipboard.SetText(profile.Password);
-            }
-            catch (Exception error)
-            {
-                if (error is ExternalException) return;
-                MessageBox.Show(string.Format("パスワードのコピーに失敗しました。\n{0}", error), "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+            ClipboardUtils.Copy(profile.Password);
     }
 
     private void RefleshData(bool updateIndex = true)
@@ -136,11 +127,54 @@ public partial class MainForm : Form
             profileComboBox.SelectedIndex = previousSelectedProfileIndex;
 
         osuFolderTextBox.Text = osuBridge.OsuFolderPath;
+
+        GenerateServerProfilesList(
+            serverComboBox.Items
+                .Cast<object>()
+                .Select(x => x.ToString())
+                .ToArray()
+        );
     }
 
     private void GenerateSettingsPanel()
     {
         if (_currentEditMode == EditMode.Profile) UIBuilder.BuildUI(settingsPanels, osuBridge.SelectedProfile);
         else if (_currentEditMode == EditMode.Server) UIBuilder.BuildUI(settingsPanels, osuBridge.SelectedServer);
+    }
+
+    private void GenerateSkinsList(string[] skinNames)
+    {
+        selectSkinMenu.DropDownItems.Clear();
+        foreach (var skinName in skinNames)
+        {
+            var item = selectSkinMenu.DropDownItems.Add(skinName);
+            item.Click += (s, e) => ClipboardUtils.Copy(skinName);
+        }
+    }
+
+    private void GenerateServerProfilesList(string?[] serverProfileNames)
+    {
+        selectServerMenu.DropDownItems.Clear();
+        foreach (var serverProfileName in serverProfileNames)
+        {
+            if (serverProfileName == null) continue;
+
+            var item = selectServerMenu.DropDownItems.Add(serverProfileName);
+            item.Click += (s, e) => ClipboardUtils.Copy(serverProfileName);
+        }
+    }
+
+    private string[] LoadSkins()
+    {
+        var skinPath = Path.Join(osuBridge.OsuFolderPath, "skins");
+        if (!Directory.Exists(skinPath)) return Array.Empty<string>();
+
+        var skins = new List<string>();
+        foreach (var skin in Directory.GetDirectories(skinPath))
+        {
+            skins.Add(Path.GetFileName(skin));
+        }
+
+        return skins.ToArray();
     }
 }

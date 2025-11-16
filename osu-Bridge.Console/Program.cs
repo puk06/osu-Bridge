@@ -1,10 +1,15 @@
 ﻿using osu_Bridge.Core.Services;
+using System.Diagnostics;
 
 class Program
 {
     static void Main()
     {
-        OsuBridge osuBridge = new("./database.json");
+        // 相対パスを取得し、カレントディレクトリを設定
+        var currentDirectory = Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName);
+        if (currentDirectory != null) Directory.SetCurrentDirectory(currentDirectory);
+
+        OsuBridge osuBridge = new("database.json");
         osuBridge.Load();
         
         Console.WriteLine("osu! Bridge - CUI Edition v1.0");

@@ -42,6 +42,11 @@
             openFolderButton = new Button();
             removeButton = new Button();
             label5 = new Label();
+            menuStrip1 = new MenuStrip();
+            toolMenu = new ToolStripMenuItem();
+            selectSkinMenu = new ToolStripMenuItem();
+            selectServerMenu = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // launchButton
@@ -49,7 +54,7 @@
             launchButton.Font = new Font("Yu Gothic UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 128);
             launchButton.Location = new Point(12, 421);
             launchButton.Name = "launchButton";
-            launchButton.Size = new Size(291, 58);
+            launchButton.Size = new Size(340, 58);
             launchButton.TabIndex = 0;
             launchButton.Text = "Launch";
             launchButton.UseVisualStyleBackColor = true;
@@ -59,9 +64,9 @@
             // 
             settingsPanels.AutoScroll = true;
             settingsPanels.BackColor = SystemColors.Control;
-            settingsPanels.Location = new Point(309, 40);
+            settingsPanels.Location = new Point(358, 40);
             settingsPanels.Name = "settingsPanels";
-            settingsPanels.Size = new Size(343, 391);
+            settingsPanels.Size = new Size(294, 391);
             settingsPanels.TabIndex = 1;
             // 
             // label1
@@ -69,7 +74,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Yu Gothic UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Point, 128);
             label1.ForeColor = SystemColors.GrayText;
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(12, 24);
             label1.Name = "label1";
             label1.Size = new Size(185, 45);
             label1.TabIndex = 2;
@@ -82,7 +87,7 @@
             profileComboBox.FormattingEnabled = true;
             profileComboBox.Location = new Point(12, 363);
             profileComboBox.Name = "profileComboBox";
-            profileComboBox.Size = new Size(201, 29);
+            profileComboBox.Size = new Size(250, 29);
             profileComboBox.TabIndex = 3;
             profileComboBox.SelectedIndexChanged += ProfileComboBox_SelectedIndexChanged;
             // 
@@ -113,14 +118,14 @@
             serverComboBox.FormattingEnabled = true;
             serverComboBox.Location = new Point(12, 279);
             serverComboBox.Name = "serverComboBox";
-            serverComboBox.Size = new Size(201, 29);
+            serverComboBox.Size = new Size(250, 29);
             serverComboBox.TabIndex = 5;
             serverComboBox.SelectedIndexChanged += ServerComboBox_SelectedIndexChanged;
             // 
             // generateServer
             // 
             generateServer.Font = new Font("Yu Gothic UI", 9F);
-            generateServer.Location = new Point(219, 279);
+            generateServer.Location = new Point(268, 279);
             generateServer.Name = "generateServer";
             generateServer.Size = new Size(84, 29);
             generateServer.TabIndex = 7;
@@ -131,7 +136,7 @@
             // generateProfile
             // 
             generateProfile.Font = new Font("Yu Gothic UI", 8F);
-            generateProfile.Location = new Point(219, 363);
+            generateProfile.Location = new Point(268, 363);
             generateProfile.Name = "generateProfile";
             generateProfile.Size = new Size(84, 29);
             generateProfile.TabIndex = 8;
@@ -144,7 +149,7 @@
             osuFolderTextBox.Font = new Font("Yu Gothic UI", 13F);
             osuFolderTextBox.Location = new Point(12, 115);
             osuFolderTextBox.Name = "osuFolderTextBox";
-            osuFolderTextBox.Size = new Size(201, 31);
+            osuFolderTextBox.Size = new Size(250, 31);
             osuFolderTextBox.TabIndex = 9;
             osuFolderTextBox.TextChanged += OsuFolderTextBox_TextChanged;
             // 
@@ -160,7 +165,7 @@
             // 
             // openFolderButton
             // 
-            openFolderButton.Location = new Point(219, 115);
+            openFolderButton.Location = new Point(268, 115);
             openFolderButton.Name = "openFolderButton";
             openFolderButton.Size = new Size(84, 31);
             openFolderButton.TabIndex = 11;
@@ -171,9 +176,9 @@
             // removeButton
             // 
             removeButton.Font = new Font("Yu Gothic UI Semibold", 13F, FontStyle.Bold);
-            removeButton.Location = new Point(309, 437);
+            removeButton.Location = new Point(358, 437);
             removeButton.Name = "removeButton";
-            removeButton.Size = new Size(343, 42);
+            removeButton.Size = new Size(294, 42);
             removeButton.TabIndex = 12;
             removeButton.Text = "削除";
             removeButton.UseVisualStyleBackColor = true;
@@ -183,11 +188,39 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            label5.Location = new Point(309, 9);
+            label5.Location = new Point(358, 9);
             label5.Name = "label5";
             label5.Size = new Size(86, 28);
             label5.TabIndex = 13;
             label5.Text = "プロパティ";
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(664, 24);
+            menuStrip1.TabIndex = 14;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // toolMenu
+            // 
+            toolMenu.DropDownItems.AddRange(new ToolStripItem[] { selectSkinMenu, selectServerMenu });
+            toolMenu.Name = "toolMenu";
+            toolMenu.Size = new Size(46, 20);
+            toolMenu.Text = "ツール";
+            // 
+            // selectSkinMenu
+            // 
+            selectSkinMenu.Name = "selectSkinMenu";
+            selectSkinMenu.Size = new Size(186, 22);
+            selectSkinMenu.Text = "スキン選択";
+            // 
+            // selectServerMenu
+            // 
+            selectServerMenu.Name = "selectServerMenu";
+            selectServerMenu.Size = new Size(186, 22);
+            selectServerMenu.Text = "サーバープロファイル選択";
             // 
             // MainForm
             // 
@@ -208,10 +241,14 @@
             Controls.Add(label1);
             Controls.Add(settingsPanels);
             Controls.Add(launchButton);
+            Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "MainForm";
             Text = "osu! Bridge - Form Edition v1.0";
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -232,5 +269,9 @@
         private Button openFolderButton;
         private Button removeButton;
         private Label label5;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem toolMenu;
+        private ToolStripMenuItem selectSkinMenu;
+        private ToolStripMenuItem selectServerMenu;
     }
 }
