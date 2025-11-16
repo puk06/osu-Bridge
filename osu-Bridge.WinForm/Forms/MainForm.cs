@@ -52,7 +52,7 @@ public partial class MainForm : Form
 
     private void OpenFolderButton_Click(object sender, EventArgs e)
     {
-        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog()
+        FolderBrowserDialog folderBrowserDialog = new()
         {
             UseDescriptionForTitle = true,
             Description = "osu!.exeが入っているフォルダを選択してください。"
@@ -120,14 +120,20 @@ public partial class MainForm : Form
         int previousSelectedServerIndex = serverComboBox.SelectedIndex;
         serverComboBox.Items.Clear();
         serverComboBox.Items.AddRange(osuBridge.Servers.Select(s => s.Name).ToArray());
-        if (ArrayUtils.IsValidIndex(serverComboBox.Items.Count, osuBridge.SelectedServerIndex)) serverComboBox.SelectedIndex = previousSelectedServerIndex;
-        if (updateIndex) serverComboBox.SelectedIndex = osuBridge.SelectedServerIndex;
+
+        if (updateIndex && ArrayUtils.IsValidIndex(serverComboBox.Items.Count, osuBridge.SelectedServerIndex))
+            serverComboBox.SelectedIndex = osuBridge.SelectedServerIndex;
+        else if (ArrayUtils.IsValidIndex(serverComboBox.Items.Count, previousSelectedServerIndex))
+            serverComboBox.SelectedIndex = previousSelectedServerIndex;
 
         int previousSelectedProfileIndex = profileComboBox.SelectedIndex;
         profileComboBox.Items.Clear();
         profileComboBox.Items.AddRange(osuBridge.Profiles.Select(p => p.ProfileName).ToArray());
-        if (ArrayUtils.IsValidIndex(profileComboBox.Items.Count, osuBridge.SelectedProfileIndex)) profileComboBox.SelectedIndex = previousSelectedProfileIndex;
-        if (updateIndex) profileComboBox.SelectedIndex = osuBridge.SelectedProfileIndex;
+
+        if (updateIndex && ArrayUtils.IsValidIndex(profileComboBox.Items.Count, osuBridge.SelectedProfileIndex))
+            profileComboBox.SelectedIndex = osuBridge.SelectedProfileIndex;
+        else if (ArrayUtils.IsValidIndex(profileComboBox.Items.Count, previousSelectedProfileIndex))
+            profileComboBox.SelectedIndex = previousSelectedProfileIndex;
 
         osuFolderTextBox.Text = osuBridge.OsuFolderPath;
     }

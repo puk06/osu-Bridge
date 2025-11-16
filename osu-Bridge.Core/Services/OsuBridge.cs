@@ -150,7 +150,6 @@ public class OsuBridge(string databasePath)
             {
                 if (key != parameters.ElementAt(j).Key) continue;
 
-                Debug.WriteLine($"{parameters.ElementAt(j).Key} = {parameters.ElementAt(j).Value}");
                 lines[i] = $"{parameters.ElementAt(j).Key} = {parameters.ElementAt(j).Value}";
                 break;
             }
