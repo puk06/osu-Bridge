@@ -22,7 +22,7 @@ class Program
 
             if (input == null) continue;
 
-            if (input.Trim().ToLower() == "exit")
+            if (input.Trim().Equals("exit", StringComparison.CurrentCultureIgnoreCase))
             {
                 Console.WriteLine("Bye!");
                 break;

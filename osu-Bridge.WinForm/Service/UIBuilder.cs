@@ -64,7 +64,7 @@ internal static class UIBuilder
                     Checked = (bool)prop.GetValue(target)!,
                     Location = new Point(150, y)
                 };
-                ((CheckBox)input).CheckedChanged += (s, e) => OnCheckboxPropertyChanged(((CheckBox)input), prop, target);
+                ((CheckBox)input).CheckedChanged += (s, e) => OnCheckboxPropertyChanged((CheckBox)input, prop, target);
             }
             else
             {
