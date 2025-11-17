@@ -268,6 +268,7 @@
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "osu! Bridge - Form Edition v1.0";
             FormClosing += MainForm_FormClosing;
             menuStrip1.ResumeLayout(false);
