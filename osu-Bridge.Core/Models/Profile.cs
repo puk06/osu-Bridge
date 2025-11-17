@@ -9,9 +9,14 @@ public class Profile
     public string ProfileName { get; set; } = "新しいプロファイル";
 
     #region Credential
+
     [Title("Credential")]
+    [UIField("ユーザー自動設定")]
+    public bool ChangeCredential { get; set; } = true;
+
     [UIField("ユーザー名")]
     [ConfigParameter("Username")]
+    [DependsOn(nameof(ChangeCredential))]
     public string Username { get; set; } = string.Empty;
 
     [Confidential]
@@ -41,6 +46,23 @@ public class Profile
     [UIField("音量(音楽）")]
     [DependsOn(nameof(ChangeAudioVolume))]
     public int MusicAudioVolume { get; set; } = 100;
+    #endregion
+
+    #region Score Meter
+    [Title("Score Meter")]
+    [UIField("スコアメーターを変更する")]
+    public bool ChangeScoreMeter { get; set; } = false;
+
+    [UIField("サイズ")]
+    [ConfigParameter("ScoreMeterScale")]
+    [DependsOn(nameof(ChangeScoreMeter))]
+    public int ScoreMeterScale { get; set; } = 1;
+
+    [UIField("タイプ")]
+    [ConfigParameter("ScoreMeter")]
+    [DependsOn(nameof(ChangeScoreMeter))]
+    [Choice([ "None", "Colour", "Hit Error" ])]
+    public string ScoreMeterType { get; set; } = "None";
     #endregion
 
     #region Offset

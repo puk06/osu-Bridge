@@ -66,6 +66,18 @@ internal static class UIBuilder
                 };
                 ((CheckBox)input).CheckedChanged += (s, e) => OnCheckboxPropertyChanged((CheckBox)input, prop, target);
             }
+            else if (prop.GetCustomAttributes(typeof(ChoiceAttribute), false).FirstOrDefault() is ChoiceAttribute choiceAttr)
+            {
+                input = new ComboBox()
+                {
+                    Location = new Point(150, y),
+                    DropDownStyle = ComboBoxStyle.DropDownList,
+                    Width = parent.Width - 180
+                };
+                ((ComboBox)input).Items.AddRange(choiceAttr.Choices);
+                if (((ComboBox)input).Items.Count > 0) ((ComboBox)input).SelectedIndex = 0;
+                ((ComboBox)input).SelectedIndexChanged += (s, e) => OnComboBoxPropertyChanged((ComboBox)input, prop, target);
+            }
             else
             {
                 input = new TextBox()
@@ -103,6 +115,21 @@ internal static class UIBuilder
             if (string.IsNullOrEmpty(textBox.Text)) return;
 
             object value = Convert.ChangeType(textBox.Text, property.PropertyType);
+            property.SetValue(target, value);
+        }
+        catch
+        {
+            // Ignored
+        }
+    }
+
+    private static void OnComboBoxPropertyChanged(ComboBox comboBox, PropertyInfo property, object target)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(comboBox.Text)) return;
+
+            object value = Convert.ChangeType(comboBox.Text, property.PropertyType);
             property.SetValue(target, value);
         }
         catch
