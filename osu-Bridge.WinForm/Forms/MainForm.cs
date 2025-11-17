@@ -116,6 +116,11 @@ public partial class MainForm : Form
 
         RefleshData(true);
     }
+
+    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        osuBridge.Save(); // Auto Save
+    }
     #endregion
 
     private static void CopyPassword(Profile? profile)

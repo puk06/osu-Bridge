@@ -269,6 +269,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             Text = "osu! Bridge - Form Edition v1.0";
+            FormClosing += MainForm_FormClosing;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
