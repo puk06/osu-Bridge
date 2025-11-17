@@ -9,7 +9,10 @@ class Program
         var currentDirectory = Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName);
         if (currentDirectory != null) Directory.SetCurrentDirectory(currentDirectory);
 
-        OsuBridge osuBridge = new("database.json");
+        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        var databasePath = Path.Combine(appDataPath, "osu-Bridge", "database.json");
+
+        OsuBridge osuBridge = new(databasePath);
         osuBridge.Load();
         
         Console.WriteLine("osu! Bridge - CUI Edition v1.0");

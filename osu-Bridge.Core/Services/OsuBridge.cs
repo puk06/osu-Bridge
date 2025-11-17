@@ -220,6 +220,12 @@ public class OsuBridge(string databasePath)
                 LastSelectedServerIndex = _selectedServerIndex,
             };
 
+            var dir = Path.GetDirectoryName(_databasePath);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
             string json = JsonSerializer.Serialize(database);
             File.WriteAllText(_databasePath, json);
 

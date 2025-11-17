@@ -17,7 +17,10 @@ public partial class MainForm : Form
     {
         InitializeComponent();
 
-        osuBridge = new("database.json");
+        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        var databasePath = Path.Combine(appDataPath, "osu-Bridge", "database.json");
+
+        osuBridge = new(databasePath);
         osuBridge.Load();
 
         RefleshData(true);
@@ -51,7 +54,15 @@ public partial class MainForm : Form
 
     private void LaunchButton_Click(object sender, EventArgs e)
     {
-        osuBridge.Launch(beforeLaunch: () => CopyPassword(osuBridge.SelectedProfile));
+        try
+        {
+            osuBridge.Launch(beforeLaunch: () => CopyPassword(osuBridge.SelectedProfile));
+        }
+        catch
+        {
+            MessageBox.Show("起動に失敗しました。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         osuBridge.Save();
         RefleshData(true);
     }

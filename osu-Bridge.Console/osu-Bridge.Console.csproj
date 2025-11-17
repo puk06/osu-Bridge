@@ -8,6 +8,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\osu-Bridge.Core\osu-Bridge.Core.csproj" />
   </ItemGroup>
