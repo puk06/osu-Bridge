@@ -30,7 +30,6 @@
         {
             launchButton = new Button();
             settingsPanels = new Panel();
-            label1 = new Label();
             profileComboBox = new ComboBox();
             label2 = new Label();
             label3 = new Label();
@@ -39,13 +38,16 @@
             generateProfile = new Button();
             osuFolderTextBox = new TextBox();
             label4 = new Label();
-            openFolderButton = new Button();
+            openOsuFolderButton = new Button();
             removeButton = new Button();
             label5 = new Label();
             menuStrip1 = new MenuStrip();
             toolMenu = new ToolStripMenuItem();
             selectSkinMenu = new ToolStripMenuItem();
             selectServerMenu = new ToolStripMenuItem();
+            openSongsFolderButton = new Button();
+            label6 = new Label();
+            songsFolderTextBox = new TextBox();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -64,21 +66,10 @@
             // 
             settingsPanels.AutoScroll = true;
             settingsPanels.BackColor = SystemColors.Control;
-            settingsPanels.Location = new Point(358, 40);
+            settingsPanels.Location = new Point(358, 71);
             settingsPanels.Name = "settingsPanels";
-            settingsPanels.Size = new Size(294, 391);
+            settingsPanels.Size = new Size(294, 360);
             settingsPanels.TabIndex = 1;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Yu Gothic UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            label1.ForeColor = SystemColors.GrayText;
-            label1.Location = new Point(12, 24);
-            label1.Name = "label1";
-            label1.Size = new Size(185, 45);
-            label1.TabIndex = 2;
-            label1.Text = "osu! Bridge";
             // 
             // profileComboBox
             // 
@@ -135,7 +126,7 @@
             // 
             // generateProfile
             // 
-            generateProfile.Font = new Font("Yu Gothic UI", 8F);
+            generateProfile.Font = new Font("Yu Gothic UI", 9F);
             generateProfile.Location = new Point(268, 363);
             generateProfile.Name = "generateProfile";
             generateProfile.Size = new Size(84, 29);
@@ -146,32 +137,32 @@
             // 
             // osuFolderTextBox
             // 
-            osuFolderTextBox.Font = new Font("Yu Gothic UI", 13F);
-            osuFolderTextBox.Location = new Point(12, 115);
+            osuFolderTextBox.Font = new Font("Yu Gothic UI", 11F);
+            osuFolderTextBox.Location = new Point(12, 64);
             osuFolderTextBox.Name = "osuFolderTextBox";
-            osuFolderTextBox.Size = new Size(250, 31);
+            osuFolderTextBox.Size = new Size(250, 27);
             osuFolderTextBox.TabIndex = 9;
             osuFolderTextBox.TextChanged += OsuFolderTextBox_TextChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            label4.Location = new Point(12, 84);
+            label4.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
+            label4.Location = new Point(12, 40);
             label4.Name = "label4";
-            label4.Size = new Size(132, 28);
+            label4.Size = new Size(105, 21);
             label4.TabIndex = 10;
             label4.Text = "osu! フォルダー";
             // 
-            // openFolderButton
+            // openOsuFolderButton
             // 
-            openFolderButton.Location = new Point(268, 115);
-            openFolderButton.Name = "openFolderButton";
-            openFolderButton.Size = new Size(84, 31);
-            openFolderButton.TabIndex = 11;
-            openFolderButton.Text = "開く";
-            openFolderButton.UseVisualStyleBackColor = true;
-            openFolderButton.Click += OpenFolderButton_Click;
+            openOsuFolderButton.Location = new Point(268, 64);
+            openOsuFolderButton.Name = "openOsuFolderButton";
+            openOsuFolderButton.Size = new Size(84, 27);
+            openOsuFolderButton.TabIndex = 11;
+            openOsuFolderButton.Text = "開く";
+            openOsuFolderButton.UseVisualStyleBackColor = true;
+            openOsuFolderButton.Click += OpenOsuFolderButton_Click;
             // 
             // removeButton
             // 
@@ -188,7 +179,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            label5.Location = new Point(358, 9);
+            label5.Location = new Point(358, 40);
             label5.Name = "label5";
             label5.Size = new Size(86, 28);
             label5.TabIndex = 13;
@@ -222,14 +213,46 @@
             selectServerMenu.Size = new Size(186, 22);
             selectServerMenu.Text = "サーバープロファイル選択";
             // 
+            // openSongsFolderButton
+            // 
+            openSongsFolderButton.Location = new Point(268, 127);
+            openSongsFolderButton.Name = "openSongsFolderButton";
+            openSongsFolderButton.Size = new Size(84, 27);
+            openSongsFolderButton.TabIndex = 17;
+            openSongsFolderButton.Text = "開く";
+            openSongsFolderButton.UseVisualStyleBackColor = true;
+            openSongsFolderButton.Click += OpenSongsFolderButton_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
+            label6.Location = new Point(12, 103);
+            label6.Name = "label6";
+            label6.Size = new Size(119, 21);
+            label6.TabIndex = 16;
+            label6.Text = "Songs フォルダー";
+            // 
+            // songsFolderTextBox
+            // 
+            songsFolderTextBox.Font = new Font("Yu Gothic UI", 11F);
+            songsFolderTextBox.Location = new Point(12, 127);
+            songsFolderTextBox.Name = "songsFolderTextBox";
+            songsFolderTextBox.Size = new Size(250, 27);
+            songsFolderTextBox.TabIndex = 15;
+            songsFolderTextBox.TextChanged += SongsFolderTextBox_TextChanged;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(664, 487);
+            Controls.Add(openSongsFolderButton);
+            Controls.Add(label6);
+            Controls.Add(songsFolderTextBox);
             Controls.Add(label5);
             Controls.Add(removeButton);
-            Controls.Add(openFolderButton);
+            Controls.Add(openOsuFolderButton);
             Controls.Add(label4);
             Controls.Add(osuFolderTextBox);
             Controls.Add(generateProfile);
@@ -238,7 +261,6 @@
             Controls.Add(serverComboBox);
             Controls.Add(label2);
             Controls.Add(profileComboBox);
-            Controls.Add(label1);
             Controls.Add(settingsPanels);
             Controls.Add(launchButton);
             Controls.Add(menuStrip1);
@@ -257,7 +279,6 @@
 
         private Button launchButton;
         private Panel settingsPanels;
-        private Label label1;
         private ComboBox profileComboBox;
         private Label label2;
         private Label label3;
@@ -266,12 +287,15 @@
         private Button generateProfile;
         private TextBox osuFolderTextBox;
         private Label label4;
-        private Button openFolderButton;
+        private Button openOsuFolderButton;
         private Button removeButton;
         private Label label5;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem toolMenu;
         private ToolStripMenuItem selectSkinMenu;
         private ToolStripMenuItem selectServerMenu;
+        private Button openSongsFolderButton;
+        private Label label6;
+        private TextBox songsFolderTextBox;
     }
 }

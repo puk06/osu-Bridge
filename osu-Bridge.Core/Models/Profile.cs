@@ -102,4 +102,15 @@ public class Profile
     [UIField("サーバープロファイル")]
     public string ServerProfileName { get; set; } = string.Empty;
     #endregion
+
+    #region Songs Folder
+    [Title("Songs Folder")]
+    [UIField("フォルダを変更する")]
+    public bool ChangeSongsFolder { get; set; } = false;
+
+    [UIField("フォルダパス")]
+    [DependsOn(nameof(ChangeSongsFolder))]
+    [ConfigParameter("BeatmapDirectory")]
+    public string SongsFolderPath { get; set; } = string.Empty;
+    #endregion
 }

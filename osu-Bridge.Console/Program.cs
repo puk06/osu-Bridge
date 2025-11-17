@@ -1,4 +1,5 @@
 ﻿using osu_Bridge.Core.Services;
+using osu_Bridge.Core.Utils;
 using System.Diagnostics;
 
 class Program
@@ -35,16 +36,16 @@ class Program
     {
         try
         {
-            var parts = command.Split(' ');
+            var parts = ArgsParserUtils.Parse(command);
 
             switch (parts[0].ToLower())
             {
-                case "load": LoadCommand(osuBridge, parts); break;
+                case "load": LoadCommand(osuBridge); break;
                 case "create": CreateCommand(osuBridge, parts); break;
                 case "select": SelectCommand(osuBridge, parts); break;
                 case "setfolder": SetFolderCommand(osuBridge, parts); break;
-                case "launch": LaunchCommand(osuBridge, parts); break;
-                case "save": SaveCommand(osuBridge, parts); break;
+                case "launch": LaunchCommand(osuBridge); break;
+                case "save": SaveCommand(osuBridge); break;
                 case "edit": EditCommand(osuBridge, parts); break;
                 case "remove": RemoveCommand(osuBridge, parts); break;
                 default: Console.WriteLine("Unknown command: " + command); break;
@@ -57,7 +58,7 @@ class Program
     }
 
     #region Commands
-    private static void LoadCommand(OsuBridge osuBridge, string[] args)
+    private static void LoadCommand(OsuBridge osuBridge)
     {
         osuBridge.Load();
     }
@@ -119,15 +120,23 @@ class Program
     }
     private static void SetFolderCommand(OsuBridge osuBridge, string[] args)
     {
-        osuBridge.SetOsuFolder(args[1]);
-        Console.WriteLine("osu! Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuFolderPath);
+        if (args[1].StartsWith('o'))
+        {
+            osuBridge.SetOsuFolder(args[2]);
+            Console.WriteLine("osu! Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuFolderPath);
+        }
+        else if (args[1].StartsWith('s'))
+        {
+            osuBridge.SetSongsFolder(args[2]);
+            Console.WriteLine("Songs Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.SongsFolderPath);
+        }
     }
-    private static void LaunchCommand(OsuBridge osuBridge, string[] args)
+    private static void LaunchCommand(OsuBridge osuBridge)
     {
         Console.WriteLine("Launching osu!...");
         osuBridge.Launch();
     }
-    private static void SaveCommand(OsuBridge osuBridge, string[] args)
+    private static void SaveCommand(OsuBridge osuBridge)
     {
         osuBridge.Save();
         Console.WriteLine("Configuration Saved!");

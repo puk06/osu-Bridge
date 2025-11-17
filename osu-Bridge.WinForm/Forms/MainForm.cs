@@ -44,6 +44,11 @@ public partial class MainForm : Form
         GenerateSkinsList(LoadSkins());
     }
 
+    private void SongsFolderTextBox_TextChanged(object sender, EventArgs e)
+    {
+        osuBridge.SetSongsFolder(songsFolderTextBox.Text);
+    }
+
     private void LaunchButton_Click(object sender, EventArgs e)
     {
         osuBridge.Launch(beforeLaunch: () => CopyPassword(osuBridge.SelectedProfile));
@@ -51,16 +56,20 @@ public partial class MainForm : Form
         RefleshData(true);
     }
 
-    private void OpenFolderButton_Click(object sender, EventArgs e)
+    private void OpenOsuFolderButton_Click(object sender, EventArgs e)
     {
-        FolderBrowserDialog folderBrowserDialog = new()
-        {
-            UseDescriptionForTitle = true,
-            Description = "osu!.exeが入っているフォルダを選択してください。"
-        };
-        if (folderBrowserDialog.ShowDialog() != DialogResult.OK) return;
+        var (result, value) = FormUtils.OpenFolderDialog("osu!.exeが入っているフォルダを選択してください。");
+        if (!result) return;
 
-        osuFolderTextBox.Text = folderBrowserDialog.SelectedPath;
+        osuFolderTextBox.Text = value;
+    }
+
+    private void OpenSongsFolderButton_Click(object sender, EventArgs e)
+    {
+        var (result, value) = FormUtils.OpenFolderDialog("Songsフォルダを選択してください。");
+        if (!result) return;
+
+        songsFolderTextBox.Text = value;
     }
 
     private void GenerateServer_Click(object sender, EventArgs e)
@@ -108,6 +117,7 @@ public partial class MainForm : Form
 
     private void RefleshData(bool updateIndex = true)
     {
+#pragma warning disable IDE0305 // コレクションの初期化を簡略化します
         int previousSelectedServerIndex = serverComboBox.SelectedIndex;
         serverComboBox.Items.Clear();
         serverComboBox.Items.AddRange(osuBridge.Servers.Select(s => s.Name).ToArray());
@@ -127,6 +137,7 @@ public partial class MainForm : Form
             profileComboBox.SelectedIndex = previousSelectedProfileIndex;
 
         osuFolderTextBox.Text = osuBridge.OsuFolderPath;
+        songsFolderTextBox.Text = osuBridge.SongsFolderPath;
 
         GenerateServerProfilesList(
             serverComboBox.Items
@@ -134,6 +145,7 @@ public partial class MainForm : Form
                 .Select(x => x.ToString())
                 .ToArray()
         );
+#pragma warning restore IDE0305 // コレクションの初期化を簡略化します
     }
 
     private void GenerateSettingsPanel()
@@ -166,8 +178,9 @@ public partial class MainForm : Form
 
     private string[] LoadSkins()
     {
+#pragma warning disable IDE0305 // コレクションの初期化を簡略化します
         var skinPath = Path.Join(osuBridge.OsuFolderPath, "skins");
-        if (!Directory.Exists(skinPath)) return Array.Empty<string>();
+        if (!Directory.Exists(skinPath)) return [];
 
         var skins = new List<string>();
         foreach (var skin in Directory.GetDirectories(skinPath))
@@ -176,5 +189,6 @@ public partial class MainForm : Form
         }
 
         return skins.ToArray();
+#pragma warning restore IDE0305 // コレクションの初期化を簡略化します
     }
 }

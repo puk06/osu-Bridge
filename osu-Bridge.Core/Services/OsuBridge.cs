@@ -9,6 +9,7 @@ namespace osu_Bridge.Core.Services;
 public class OsuBridge(string databasePath)
 {
     public string OsuFolderPath => _osuFolderPath;
+    public string SongsFolderPath => _songsFolderPath;
 
     public List<Profile> Profiles => _profiles;
     public List<Server> Servers => _servers;
@@ -20,17 +21,19 @@ public class OsuBridge(string databasePath)
     public int SelectedServerIndex => _selectedServerIndex;
 
     private const string OSU_PROCESS_NAME = "osu!.exe";
+    private const string SONGS_DIRECTORY_KEY = "BeatmapDirectory";
 
-    private readonly List<Profile> _profiles = new();
-    private readonly List<Server> _servers = new();
+    private readonly List<Profile> _profiles = [];
+    private readonly List<Server> _servers = [];
 
     private ProcessStartInfo? _processStartInfo;
     private readonly string _databasePath = databasePath;
     private string _osuFolderPath = string.Empty;
+    private string _songsFolderPath = string.Empty;
     private int _selectedProfileIndex = -1;
     private int _selectedServerIndex = -1;
 
-    #region osu! Folder
+    #region Folder
     public void SetOsuFolder(string folder)
     {
         _osuFolderPath = folder;
@@ -40,6 +43,10 @@ public class OsuBridge(string databasePath)
             FileName = Path.Combine(_osuFolderPath, OSU_PROCESS_NAME),
             WorkingDirectory = _osuFolderPath
         };
+    }
+    public void SetSongsFolder(string folder)
+    {
+        _songsFolderPath = folder;
     }
     #endregion
 
@@ -104,13 +111,18 @@ public class OsuBridge(string databasePath)
     {
         if (profile == null && server == null) return;
 
-        Dictionary<string, string> parameters = new();
+        Dictionary<string, string> parameters = [];
 
         if (profile != null)
             ApplyToParameter(profile, parameters);
 
         if (server != null)
             ApplyToParameter(server, parameters);
+
+        if (parameters.ContainsKey(SONGS_DIRECTORY_KEY))
+        {
+            parameters.Add(SONGS_DIRECTORY_KEY, _songsFolderPath);
+        }
 
         WriteConfigToFile(parameters);
     }
@@ -201,6 +213,7 @@ public class OsuBridge(string databasePath)
             var database = new Database()
             {
                 OsuFolderPath = _osuFolderPath,
+                SongsFolderPath = _songsFolderPath,
                 Profiles = _profiles,
                 Servers = _servers,
                 LastSelectedProfileIndex = _selectedProfileIndex,
@@ -231,6 +244,7 @@ public class OsuBridge(string databasePath)
         _servers.AddRange(database.Servers);
 
         _osuFolderPath = database.OsuFolderPath;
+        _songsFolderPath = database.SongsFolderPath;
 
         _processStartInfo = new ProcessStartInfo
         {

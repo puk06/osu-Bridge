@@ -3,6 +3,7 @@
 public class Database
 {
     public string OsuFolderPath { get; set; } = string.Empty;
+    public string SongsFolderPath { get; set; } = "Songs"; // Default
     public List<Profile> Profiles { get; set; } = [];
     public List<Server> Servers { get; set; } = [];
     public int LastSelectedProfileIndex { get; set; } = -1;
