@@ -1,14 +1,10 @@
 ﻿using osu_Bridge.Core.Services;
 using osu_Bridge.Core.Utils;
-using System.Diagnostics;
 
 class Program
 {
     static void Main()
     {
-        var currentDirectory = Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName);
-        if (currentDirectory != null) Directory.SetCurrentDirectory(currentDirectory);
-
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         var databasePath = Path.Combine(appDataPath, "osu-Bridge", "database.json");
 

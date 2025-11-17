@@ -5,7 +5,7 @@ namespace osu_Bridge.WinForm.Service;
 
 internal static class UIBuilder
 {
-    private static readonly Font TitleFont = new Font("Yu Gothic UI", 11F, FontStyle.Bold);
+    private static readonly Font TitleFont = new("Yu Gothic UI", 11F, FontStyle.Bold);
 
     internal static void BuildUI(Control parent, object? target)
     {
@@ -75,7 +75,10 @@ internal static class UIBuilder
                     Width = parent.Width - 180
                 };
                 ((ComboBox)input).Items.AddRange(choiceAttr.Choices);
-                if (((ComboBox)input).Items.Count > 0) ((ComboBox)input).SelectedIndex = 0;
+
+                if (((ComboBox)input).Items.IndexOf(prop.GetValue(target)) != -1) ((ComboBox)input).SelectedIndex = ((ComboBox)input).Items.IndexOf(prop.GetValue(target));
+                else if (((ComboBox)input).Items.Count > 0) ((ComboBox)input).SelectedIndex = 0;
+
                 ((ComboBox)input).SelectedIndexChanged += (s, e) => OnComboBoxPropertyChanged((ComboBox)input, prop, target);
             }
             else
