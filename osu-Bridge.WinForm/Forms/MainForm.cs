@@ -102,9 +102,10 @@ public partial class MainForm : Form
     private void LazerModeCheckbox_CheckedChanged(object sender, EventArgs e)
     {
         osuBridge.SetLazerMode(lazerModeCheckbox.Checked);
+        GenerateSettingsPanel();
+        
         serverComboBox.Enabled = !osuBridge.LazerMode;
         launchButton.Text = osuBridge.LazerMode ? "Launch - Lazer" : "Launch";
-        GenerateSettingsPanel();
     }
 
     private void GenerateServer_Click(object sender, EventArgs e)
