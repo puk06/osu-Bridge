@@ -1,14 +1,23 @@
 ﻿using osu_Bridge.Core.Attributes;
+using osu_Bridge.Core.Attributes.Lazer;
 using osu_Bridge.Core.Models;
+using osu_Bridge.Core.Models.Lazer;
 using osu_Bridge.Core.Utils;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace osu_Bridge.Core.Services;
 
-public class OsuBridge(string databasePath)
+public partial class OsuBridge(string databasePath)
 {
+    [GeneratedRegex(@"\{(\w+)\}")]
+    private static partial Regex LazerConfigFormatString();
+
+    public bool LazerMode => _lazerMode;
+
     public string OsuFolderPath => _osuFolderPath;
+    public string OsuLazerFolderPath => _osuLazerFolderPath;
     public string SongsFolderPath => _songsFolderPath;
 
     public List<Profile> Profiles => _profiles;
@@ -28,25 +37,47 @@ public class OsuBridge(string databasePath)
 
     private ProcessStartInfo? _processStartInfo;
     private readonly string _databasePath = databasePath;
+
+    private bool _lazerMode = false;
     private string _osuFolderPath = string.Empty;
+    private string _osuLazerFolderPath = string.Empty;
     private string _songsFolderPath = string.Empty;
     private int _selectedProfileIndex = -1;
     private int _selectedServerIndex = -1;
+
+    #region Lazer Mode
+    public void SetLazerMode(bool lazerMode)
+    {
+        _lazerMode = lazerMode;
+        GenerateProcessStartInfo();
+    }
+    #endregion
 
     #region Folder
     public void SetOsuFolder(string folder)
     {
         _osuFolderPath = folder;
-
-        _processStartInfo = new ProcessStartInfo
-        {
-            FileName = Path.Combine(_osuFolderPath, OSU_PROCESS_NAME),
-            WorkingDirectory = _osuFolderPath
-        };
+        GenerateProcessStartInfo();
+    }
+    public void SetOsuLazerFolder(string folder)
+    {
+        _osuLazerFolderPath = folder;
+        GenerateProcessStartInfo();
     }
     public void SetSongsFolder(string folder)
     {
         _songsFolderPath = folder;
+    }
+    
+    private void GenerateProcessStartInfo()
+    {
+        var osuFolder = _lazerMode ? _osuLazerFolderPath : _osuFolderPath;
+        
+        _processStartInfo = new ProcessStartInfo
+        {
+            FileName = Path.Combine(osuFolder, OSU_PROCESS_NAME),
+            WorkingDirectory = osuFolder
+        };
     }
     #endregion
 
@@ -126,7 +157,6 @@ public class OsuBridge(string databasePath)
 
         WriteConfigToFile(parameters);
     }
-
     private static void ApplyToParameter(object target, Dictionary<string, string> parameters)
     {
         var type = target.GetType();
@@ -152,25 +182,94 @@ public class OsuBridge(string databasePath)
     {
         string username = Environment.UserName;
         string path = Path.Combine(_osuFolderPath, $"osu!.{username}.cfg");
+
         string[] lines = File.ReadAllLines(path);
-
-        for (int i = 0; i < lines.Length; i++)
-        {
-            string key = lines[i].Split('=')[0].Trim();
-            
-            for (int j = 0; j < parameters.Count; j++)
-            {
-                if (key != parameters.ElementAt(j).Key) continue;
-
-                lines[i] = $"{parameters.ElementAt(j).Key} = {parameters.ElementAt(j).Value}";
-                break;
-            }
-        }
-
+        ConfigUtils.WriteParameterValue(lines, parameters);
         File.WriteAllLines(path, lines);
     }
     #endregion
 
+    #region Configuration File (Lazer)
+    private static void SetConfigLazer(Profile? profile, Server? server)
+    {
+        if (profile == null && server == null) return;
+
+        Dictionary<string, string> frameworkParameters = [];
+        Dictionary<string, string> gameParameters = [];
+
+        if (profile != null)
+            ApplyToParameterLazer(profile, frameworkParameters, gameParameters);
+
+        WriteConfigToFileLazer(frameworkParameters, gameParameters);
+    }
+    private static void ApplyToParameterLazer(object target, Dictionary<string, string> frameworkParameters, Dictionary<string, string> gameParameters)
+    {
+        var type = target.GetType();
+
+        foreach (var property in type.GetProperties())
+        {
+            if (property.GetCustomAttributes(typeof(LazerConfigurationAttribute), false).FirstOrDefault() is LazerConfigurationAttribute lazerConfigurationAttribute)
+            {
+                if (property.GetCustomAttributes(typeof(DependsOnAttribute), false).FirstOrDefault() is DependsOnAttribute dependsOnAttribute)
+                {
+                    var dependsProp = type.GetProperty(dependsOnAttribute.PropertyName);
+                    if (dependsProp == null || !(bool)dependsProp.GetValue(target)!) continue;
+                }
+
+                var value = property.GetValue(target);
+                if (value == null) continue;
+
+                var valueText = value.ToString();
+
+                if (lazerConfigurationAttribute.TextFormat != string.Empty)
+                {
+                    valueText = LazerConfigFormatString().Replace(lazerConfigurationAttribute.TextFormat, match =>
+                    {
+                        string propertyName = match.Groups[1].Value;
+                        var prop = type.GetProperty(propertyName);
+                        if (prop == null) return match.Value;
+
+                        var value = prop.GetValue(target);
+                        return value?.ToString() ?? "";
+                    });
+                }
+
+                if (Attribute.IsDefined(property, typeof(LazerValueClampAttribute)))
+                {
+                    var parsedValue = double.Parse(valueText!);
+                    parsedValue /= 100;
+
+                    valueText = parsedValue.ToString("F1");
+                }
+
+                if (lazerConfigurationAttribute.LazerConfigurationType == LazerConfigurationType.Framework)
+                {
+                    frameworkParameters.Add(lazerConfigurationAttribute.ParameterName, valueText!);
+                }
+                else if(lazerConfigurationAttribute.LazerConfigurationType == LazerConfigurationType.Game)
+                {
+                    gameParameters.Add(lazerConfigurationAttribute.ParameterName, valueText!);
+                }
+            }
+        }
+    }
+    private static void WriteConfigToFileLazer(Dictionary<string, string> frameworkParameters, Dictionary<string, string> gameParameters)
+    {
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+        string frameworkConfigPath = Path.Combine(appDataPath, "osu", "framework.ini");
+        string gameConfigPath = Path.Combine(appDataPath, "osu", "game.ini");
+
+        string[] frameworkLines = File.ReadAllLines(frameworkConfigPath);
+        ConfigUtils.WriteParameterValue(frameworkLines, frameworkParameters);
+        File.WriteAllLines(frameworkConfigPath, frameworkLines);
+
+        string[] gameLines = File.ReadAllLines(gameConfigPath);
+        ConfigUtils.WriteParameterValue(gameLines, gameParameters);
+        File.WriteAllLines(gameConfigPath, gameLines);
+    }
+    #endregion
+    
     #region Launch
     public void Launch(Action? beforeLaunch = null, Action? afterLaunch = null)
     {
@@ -187,8 +286,9 @@ public class OsuBridge(string databasePath)
                     if (serverIndex != -1) _selectedServerIndex = serverIndex;
                 }
             }
-
-            SetConfig(SelectedProfile, SelectedServer); // Config Setup
+            
+            if (_lazerMode) SetConfigLazer(SelectedProfile, SelectedServer); // Config Setup
+            else SetConfig(SelectedProfile, SelectedServer);
         }
 
         _processStartInfo.Arguments = string.Empty;
@@ -212,7 +312,9 @@ public class OsuBridge(string databasePath)
         {
             var database = new Database()
             {
+                LazerMode = _lazerMode,
                 OsuFolderPath = _osuFolderPath,
+                OsuLazerFolderPath = _osuLazerFolderPath,
                 SongsFolderPath = _songsFolderPath,
                 Profiles = _profiles,
                 Servers = _servers,
@@ -249,14 +351,12 @@ public class OsuBridge(string databasePath)
         _servers.Clear();
         _servers.AddRange(database.Servers);
 
+        _lazerMode = database.LazerMode;
         _osuFolderPath = database.OsuFolderPath;
+        _osuLazerFolderPath = database.OsuLazerFolderPath;
         _songsFolderPath = database.SongsFolderPath;
 
-        _processStartInfo = new ProcessStartInfo
-        {
-            FileName = Path.Combine(_osuFolderPath, "osu!.exe"),
-            WorkingDirectory = _osuFolderPath
-        };
+        GenerateProcessStartInfo();
 
         _selectedProfileIndex = database.LastSelectedProfileIndex;
         _selectedServerIndex = database.LastSelectedServerIndex;

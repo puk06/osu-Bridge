@@ -11,7 +11,7 @@ class Program
         OsuBridge osuBridge = new(databasePath);
         osuBridge.Load();
         
-        Console.WriteLine("osu! Bridge - CUI Edition v1.0");
+        Console.WriteLine("osu! Bridge - CUI Edition");
         Console.WriteLine("Type 'exit' to quit.\n");
 
         while (true)
@@ -47,6 +47,7 @@ class Program
                 case "save": SaveCommand(osuBridge); break;
                 case "edit": EditCommand(osuBridge, parts); break;
                 case "remove": RemoveCommand(osuBridge, parts); break;
+                case "lazermode": LazerModeCommand(osuBridge); break;
                 default: Console.WriteLine("Unknown command: " + parts[0]); break;
             }
         }
@@ -197,6 +198,12 @@ class Program
                 Console.WriteLine("Server Remove Failed...!\n");
             }
         }
+    }
+
+    private static void LazerModeCommand(OsuBridge osuBridge)
+    {
+        osuBridge.SetLazerMode(!osuBridge.LazerMode);
+        Console.WriteLine("Lazer Mode is now {0}!\n", osuBridge.LazerMode);
     }
     #endregion
 }

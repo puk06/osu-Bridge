@@ -1,4 +1,6 @@
 ﻿using osu_Bridge.Core.Attributes;
+using osu_Bridge.Core.Attributes.Lazer;
+using osu_Bridge.Core.Models.Lazer;
 
 namespace osu_Bridge.Core.Models;
 
@@ -17,6 +19,7 @@ public class Profile
     [UIField("ユーザー名")]
     [ConfigParameter("Username")]
     [DependsOn(nameof(ChangeCredential))]
+    [LazerConfiguration("Username", LazerConfigurationType.Game)]
     public string Username { get; set; } = string.Empty;
 
     [Confidential]
@@ -35,16 +38,22 @@ public class Profile
     [ConfigParameter("VolumeUniversal")]
     [UIField("音量(全体）")]
     [DependsOn(nameof(ChangeAudioVolume))]
+    [LazerValueClamp]
+    [LazerConfiguration("VolumeUniversal", LazerConfigurationType.Framework)]
     public int MasterAudioVolume { get; set; } = 100;
 
     [ConfigParameter("VolumeEffect")]
     [UIField("音量(効果音）")]
     [DependsOn(nameof(ChangeAudioVolume))]
+    [LazerValueClamp]
+    [LazerConfiguration("VolumeEffect", LazerConfigurationType.Framework)]
     public int EffectAudioVolume { get; set; } = 100;
 
     [ConfigParameter("VolumeMusic")]
     [UIField("音量(音楽）")]
     [DependsOn(nameof(ChangeAudioVolume))]
+    [LazerValueClamp]
+    [LazerConfiguration("VolumeMusic", LazerConfigurationType.Framework)]
     public int MusicAudioVolume { get; set; } = 100;
     #endregion
 
@@ -56,12 +65,14 @@ public class Profile
     [UIField("サイズ")]
     [ConfigParameter("ScoreMeterScale")]
     [DependsOn(nameof(ChangeScoreMeter))]
+    [LazerNotSupported]
     public int ScoreMeterScale { get; set; } = 1;
 
     [UIField("タイプ")]
     [ConfigParameter("ScoreMeter")]
     [DependsOn(nameof(ChangeScoreMeter))]
     [Choice([ "None", "Colour", "Hit Error" ])]
+    [LazerNotSupported]
     public string ScoreMeterType { get; set; } = "None";
     #endregion
 
@@ -73,6 +84,7 @@ public class Profile
     [ConfigParameter("Offset")]
     [UIField("全体オフセット")]
     [DependsOn(nameof(ChangeOffset))]
+    [LazerConfiguration("AudioOffset", LazerConfigurationType.Game)]
     public int MasterOffset { get; set; }
     #endregion
 
@@ -89,6 +101,7 @@ public class Profile
     [ConfigParameter("Height")]
     [UIField("高さ")]
     [DependsOn(nameof(ChangeNormalResolution))]
+    [LazerConfiguration("WindowedSize", LazerConfigurationType.Framework, "{NormalWidth}x{NormalHeight}")]
     public int NormalHeight { get; set; } = 1080;
 
     [UIField("フルスクリーンを変更する")]
@@ -102,6 +115,7 @@ public class Profile
     [ConfigParameter("FullScreenHeight")]
     [UIField("高さ")]
     [DependsOn(nameof(ChangeFullScreenResolution))]
+    [LazerConfiguration("SizeFullscreen", LazerConfigurationType.Framework, "{FullScreenWidth}x{FullScreenHeight}")]
     public int FullScreenHeight { get; set; } = 1080;
     #endregion
 
@@ -113,6 +127,7 @@ public class Profile
     [ConfigParameter("Skin")]
     [UIField("スキン名")]
     [DependsOn(nameof(ChangeSkin))]
+    [LazerNotSupported]
     public string SkinName { get; set; } = string.Empty;
     #endregion
 
@@ -122,6 +137,7 @@ public class Profile
     public bool ChangeServer { get; set; } = false;
     
     [UIField("サーバープロファイル")]
+    [LazerNotSupported]
     public string ServerProfileName { get; set; } = string.Empty;
     #endregion
 
@@ -133,6 +149,7 @@ public class Profile
     [UIField("フォルダパス")]
     [DependsOn(nameof(ChangeSongsFolder))]
     [ConfigParameter("BeatmapDirectory")]
+    [LazerNotSupported]
     public string SongsFolderPath { get; set; } = string.Empty;
     #endregion
 }

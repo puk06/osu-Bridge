@@ -9,6 +9,7 @@ namespace osu_Bridge.WinForm.Forms;
 
 public partial class MainForm : Form
 {
+    private const char PATH_CHAR = '*';
     private readonly OsuBridge osuBridge = null!;
 
     private EditMode _currentEditMode = EditMode.Profile;
@@ -33,7 +34,6 @@ public partial class MainForm : Form
         _currentEditMode = EditMode.Server;
         GenerateSettingsPanel();
     }
-
     private void ProfileComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         osuBridge.SelectProfile(profileComboBox.SelectedIndex);
@@ -46,11 +46,21 @@ public partial class MainForm : Form
         osuBridge.SetOsuFolder(osuFolderTextBox.Text);
         GenerateSkinsList(LoadSkins());
     }
-
+    private void OsuLazerFolderTextBox_TextChanged(object sender, EventArgs e)
+    {
+        osuBridge.SetOsuLazerFolder(osuLazerFolderTextBox.Text);
+    }
     private void SongsFolderTextBox_TextChanged(object sender, EventArgs e)
     {
         osuBridge.SetSongsFolder(songsFolderTextBox.Text);
     }
+
+    private void ShowOsuFolderPath_CheckedChanged(object sender, EventArgs e)
+        => osuFolderTextBox.PasswordChar = showOsuFolderPath.Checked ? '\0' : PATH_CHAR;
+    private void ShowOsuLazerFolderPath_CheckedChanged(object sender, EventArgs e)
+        => osuLazerFolderTextBox.PasswordChar = showOsuLazerFolderPath.Checked ? '\0' : PATH_CHAR;
+    private void ShowSongsFolderPath_CheckedChanged(object sender, EventArgs e)
+        => songsFolderTextBox.PasswordChar = showSongsFolderPath.Checked ? '\0' : PATH_CHAR;
 
     private void LaunchButton_Click(object sender, EventArgs e)
     {
@@ -58,9 +68,9 @@ public partial class MainForm : Form
         {
             osuBridge.Launch(beforeLaunch: () => CopyPassword(osuBridge.SelectedProfile));
         }
-        catch
+        catch (Exception ex)
         {
-            MessageBox.Show("起動に失敗しました。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(string.Format("起動に失敗しました。\nエラー: {0}", ex), "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         osuBridge.Save();
@@ -74,7 +84,13 @@ public partial class MainForm : Form
 
         osuFolderTextBox.Text = value;
     }
+    private void OpenOsuLazerFolderButton_Click(object sender, EventArgs e)
+    {
+        var (result, value) = FormUtils.OpenFolderDialog("osu!.exe(Lazer)が入っているフォルダを選択してください。");
+        if (!result) return;
 
+        osuLazerFolderTextBox.Text = value;
+    }
     private void OpenSongsFolderButton_Click(object sender, EventArgs e)
     {
         var (result, value) = FormUtils.OpenFolderDialog("Songsフォルダを選択してください。");
@@ -83,13 +99,20 @@ public partial class MainForm : Form
         songsFolderTextBox.Text = value;
     }
 
+    private void LazerModeCheckbox_CheckedChanged(object sender, EventArgs e)
+    {
+        osuBridge.SetLazerMode(lazerModeCheckbox.Checked);
+        serverComboBox.Enabled = !osuBridge.LazerMode;
+        launchButton.Text = osuBridge.LazerMode ? "Launch - Lazer" : "Launch";
+        GenerateSettingsPanel();
+    }
+
     private void GenerateServer_Click(object sender, EventArgs e)
     {
         int index = osuBridge.CreateServer();
         if (index != -1) osuBridge.SelectServer(index);
         RefleshData(true);
     }
-
     private void GenerateProfile_Click(object sender, EventArgs e)
     {
         int index = osuBridge.CreateProfile();
@@ -97,23 +120,20 @@ public partial class MainForm : Form
         RefleshData(true);
     }
 
-    private void RemoveButton_Click(object sender, EventArgs e)
+    private void RemoveProfileButton_Click(object sender, EventArgs e)
     {
-        if (_currentEditMode == EditMode.Profile)
-        {
-            if (osuBridge.SelectedProfile == null) return;
+        if (osuBridge.SelectedProfile == null) return;
 
-            var result = MessageBox.Show(string.Format("このプロファイルを削除しますか？\nプロファイル名: {0}", osuBridge.SelectedProfile.ProfileName), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            if (result == DialogResult.Yes) osuBridge.RemoveProfile(osuBridge.SelectedProfileIndex);
-        }
-        else if (_currentEditMode == EditMode.Server)
-        {
-            if (osuBridge.SelectedServer == null) return;
+        var result = MessageBox.Show(string.Format("このプロファイルを削除しますか？\nプロファイル名: {0}", osuBridge.SelectedProfile.ProfileName), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+        if (result == DialogResult.Yes) osuBridge.RemoveProfile(osuBridge.SelectedProfileIndex);
+        RefleshData(true);
+    }
+    private void RemoveServerButton_Click(object sender, EventArgs e)
+    {
+        if (osuBridge.SelectedServer == null) return;
 
-            var result = MessageBox.Show(string.Format("このサーバーを削除しますか？\nサーバープロファイル名: {0}", osuBridge.SelectedServer.Name), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            if (result == DialogResult.Yes) osuBridge.RemoveServer(osuBridge.SelectedServerIndex);
-        }
-
+        var result = MessageBox.Show(string.Format("このサーバーを削除しますか？\nサーバープロファイル名: {0}", osuBridge.SelectedServer.Name), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+        if (result == DialogResult.Yes) osuBridge.RemoveServer(osuBridge.SelectedServerIndex);
         RefleshData(true);
     }
 
@@ -153,7 +173,10 @@ public partial class MainForm : Form
             profileComboBox.SelectedIndex = previousSelectedProfileIndex;
 
         osuFolderTextBox.Text = osuBridge.OsuFolderPath;
+        osuLazerFolderTextBox.Text = osuBridge.OsuLazerFolderPath;
         songsFolderTextBox.Text = osuBridge.SongsFolderPath;
+
+        lazerModeCheckbox.Checked = osuBridge.LazerMode;
 
         GenerateServerProfilesList(
             serverComboBox.Items
@@ -166,8 +189,8 @@ public partial class MainForm : Form
 
     private void GenerateSettingsPanel()
     {
-        if (_currentEditMode == EditMode.Profile) UIBuilder.BuildUI(settingsPanels, osuBridge.SelectedProfile);
-        else if (_currentEditMode == EditMode.Server) UIBuilder.BuildUI(settingsPanels, osuBridge.SelectedServer);
+        if (_currentEditMode == EditMode.Profile) UIBuilder.BuildUI(profileSettingsPanel, osuBridge.SelectedProfile, osuBridge.LazerMode);
+        else if (_currentEditMode == EditMode.Server) UIBuilder.BuildUI(profileSettingsPanel, osuBridge.SelectedServer, osuBridge.LazerMode);
     }
 
     private void GenerateSkinsList(string[] skinNames)

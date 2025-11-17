@@ -30,33 +30,44 @@
         {
             launchButton = new Button();
             settingsPanels = new Panel();
+            showSongsFolderPath = new CheckBox();
+            showOsuFolderPath = new CheckBox();
+            showOsuLazerFolderPath = new CheckBox();
+            label3 = new Label();
+            osuLazerFolderTextBox = new TextBox();
+            openOsuLazerFolderButton = new Button();
+            lazerModeCheckbox = new CheckBox();
+            label5 = new Label();
+            label4 = new Label();
+            osuFolderTextBox = new TextBox();
+            openSongsFolderButton = new Button();
+            serverComboBox = new ComboBox();
+            openOsuFolderButton = new Button();
+            label6 = new Label();
+            songsFolderTextBox = new TextBox();
             profileComboBox = new ComboBox();
             label2 = new Label();
-            label3 = new Label();
-            serverComboBox = new ComboBox();
-            generateServer = new Button();
-            generateProfile = new Button();
-            osuFolderTextBox = new TextBox();
-            label4 = new Label();
-            openOsuFolderButton = new Button();
-            removeButton = new Button();
-            label5 = new Label();
             menuStrip1 = new MenuStrip();
             toolMenu = new ToolStripMenuItem();
             selectSkinMenu = new ToolStripMenuItem();
             selectServerMenu = new ToolStripMenuItem();
-            openSongsFolderButton = new Button();
-            label6 = new Label();
-            songsFolderTextBox = new TextBox();
+            generateServerMenu = new ToolStripMenuItem();
+            generateProfileMenu = new ToolStripMenuItem();
+            removeMenu = new ToolStripMenuItem();
+            removeProfileButton = new ToolStripMenuItem();
+            removeServerButton = new ToolStripMenuItem();
+            label1 = new Label();
+            profileSettingsPanel = new Panel();
+            settingsPanels.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // launchButton
             // 
             launchButton.Font = new Font("Yu Gothic UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            launchButton.Location = new Point(12, 421);
+            launchButton.Location = new Point(768, 503);
             launchButton.Name = "launchButton";
-            launchButton.Size = new Size(340, 58);
+            launchButton.Size = new Size(299, 58);
             launchButton.TabIndex = 0;
             launchButton.Text = "Launch";
             launchButton.UseVisualStyleBackColor = true;
@@ -66,19 +77,195 @@
             // 
             settingsPanels.AutoScroll = true;
             settingsPanels.BackColor = SystemColors.Control;
-            settingsPanels.Location = new Point(358, 71);
+            settingsPanels.BorderStyle = BorderStyle.FixedSingle;
+            settingsPanels.Controls.Add(showSongsFolderPath);
+            settingsPanels.Controls.Add(showOsuFolderPath);
+            settingsPanels.Controls.Add(showOsuLazerFolderPath);
+            settingsPanels.Controls.Add(label3);
+            settingsPanels.Controls.Add(osuLazerFolderTextBox);
+            settingsPanels.Controls.Add(openOsuLazerFolderButton);
+            settingsPanels.Controls.Add(lazerModeCheckbox);
+            settingsPanels.Controls.Add(label5);
+            settingsPanels.Controls.Add(label4);
+            settingsPanels.Controls.Add(osuFolderTextBox);
+            settingsPanels.Controls.Add(openSongsFolderButton);
+            settingsPanels.Controls.Add(serverComboBox);
+            settingsPanels.Controls.Add(openOsuFolderButton);
+            settingsPanels.Controls.Add(label6);
+            settingsPanels.Controls.Add(songsFolderTextBox);
+            settingsPanels.Dock = DockStyle.Left;
+            settingsPanels.Location = new Point(0, 24);
             settingsPanels.Name = "settingsPanels";
-            settingsPanels.Size = new Size(294, 360);
+            settingsPanels.Size = new Size(302, 549);
             settingsPanels.TabIndex = 1;
+            // 
+            // showSongsFolderPath
+            // 
+            showSongsFolderPath.AutoSize = true;
+            showSongsFolderPath.Font = new Font("Yu Gothic UI", 10F);
+            showSongsFolderPath.Location = new Point(194, 142);
+            showSongsFolderPath.Name = "showSongsFolderPath";
+            showSongsFolderPath.Size = new Size(89, 23);
+            showSongsFolderPath.TabIndex = 27;
+            showSongsFolderPath.Text = "パスの表示";
+            showSongsFolderPath.UseVisualStyleBackColor = true;
+            showSongsFolderPath.CheckedChanged += ShowSongsFolderPath_CheckedChanged;
+            // 
+            // showOsuFolderPath
+            // 
+            showOsuFolderPath.AutoSize = true;
+            showOsuFolderPath.Font = new Font("Yu Gothic UI", 10F);
+            showOsuFolderPath.Location = new Point(194, 8);
+            showOsuFolderPath.Name = "showOsuFolderPath";
+            showOsuFolderPath.Size = new Size(89, 23);
+            showOsuFolderPath.TabIndex = 26;
+            showOsuFolderPath.Text = "パスの表示";
+            showOsuFolderPath.UseVisualStyleBackColor = true;
+            showOsuFolderPath.CheckedChanged += ShowOsuFolderPath_CheckedChanged;
+            // 
+            // showOsuLazerFolderPath
+            // 
+            showOsuLazerFolderPath.AutoSize = true;
+            showOsuLazerFolderPath.Font = new Font("Yu Gothic UI", 10F);
+            showOsuLazerFolderPath.Location = new Point(194, 71);
+            showOsuLazerFolderPath.Name = "showOsuLazerFolderPath";
+            showOsuLazerFolderPath.Size = new Size(89, 23);
+            showOsuLazerFolderPath.TabIndex = 25;
+            showOsuLazerFolderPath.Text = "パスの表示";
+            showOsuLazerFolderPath.UseVisualStyleBackColor = true;
+            showOsuLazerFolderPath.CheckedChanged += ShowOsuLazerFolderPath_CheckedChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
+            label3.Location = new Point(9, 73);
+            label3.Name = "label3";
+            label3.Size = new Size(147, 21);
+            label3.TabIndex = 23;
+            label3.Text = "osu! Lazer フォルダー";
+            // 
+            // osuLazerFolderTextBox
+            // 
+            osuLazerFolderTextBox.Font = new Font("Yu Gothic UI", 11F);
+            osuLazerFolderTextBox.Location = new Point(9, 97);
+            osuLazerFolderTextBox.Name = "osuLazerFolderTextBox";
+            osuLazerFolderTextBox.PasswordChar = '*';
+            osuLazerFolderTextBox.Size = new Size(200, 27);
+            osuLazerFolderTextBox.TabIndex = 22;
+            osuLazerFolderTextBox.TextChanged += OsuLazerFolderTextBox_TextChanged;
+            // 
+            // openOsuLazerFolderButton
+            // 
+            openOsuLazerFolderButton.Location = new Point(215, 97);
+            openOsuLazerFolderButton.Name = "openOsuLazerFolderButton";
+            openOsuLazerFolderButton.Size = new Size(68, 27);
+            openOsuLazerFolderButton.TabIndex = 24;
+            openOsuLazerFolderButton.Text = "開く";
+            openOsuLazerFolderButton.UseVisualStyleBackColor = true;
+            openOsuLazerFolderButton.Click += OpenOsuLazerFolderButton_Click;
+            // 
+            // lazerModeCheckbox
+            // 
+            lazerModeCheckbox.AutoSize = true;
+            lazerModeCheckbox.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lazerModeCheckbox.Location = new Point(11, 280);
+            lazerModeCheckbox.Name = "lazerModeCheckbox";
+            lazerModeCheckbox.Size = new Size(115, 29);
+            lazerModeCheckbox.TabIndex = 21;
+            lazerModeCheckbox.Text = "Lazerモード";
+            lazerModeCheckbox.UseVisualStyleBackColor = true;
+            lazerModeCheckbox.CheckedChanged += LazerModeCheckbox_CheckedChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
+            label5.Location = new Point(9, 222);
+            label5.Name = "label5";
+            label5.Size = new Size(58, 21);
+            label5.TabIndex = 18;
+            label5.Text = "サーバー";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
+            label4.Location = new Point(9, 10);
+            label4.Name = "label4";
+            label4.Size = new Size(105, 21);
+            label4.TabIndex = 10;
+            label4.Text = "osu! フォルダー";
+            // 
+            // osuFolderTextBox
+            // 
+            osuFolderTextBox.Font = new Font("Yu Gothic UI", 11F);
+            osuFolderTextBox.Location = new Point(9, 34);
+            osuFolderTextBox.Name = "osuFolderTextBox";
+            osuFolderTextBox.PasswordChar = '*';
+            osuFolderTextBox.Size = new Size(200, 27);
+            osuFolderTextBox.TabIndex = 9;
+            osuFolderTextBox.TextChanged += OsuFolderTextBox_TextChanged;
+            // 
+            // openSongsFolderButton
+            // 
+            openSongsFolderButton.Location = new Point(215, 168);
+            openSongsFolderButton.Name = "openSongsFolderButton";
+            openSongsFolderButton.Size = new Size(68, 27);
+            openSongsFolderButton.TabIndex = 17;
+            openSongsFolderButton.Text = "開く";
+            openSongsFolderButton.UseVisualStyleBackColor = true;
+            openSongsFolderButton.Click += OpenSongsFolderButton_Click;
+            // 
+            // serverComboBox
+            // 
+            serverComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            serverComboBox.Font = new Font("Yu Gothic UI", 11F);
+            serverComboBox.FormattingEnabled = true;
+            serverComboBox.Location = new Point(9, 246);
+            serverComboBox.Name = "serverComboBox";
+            serverComboBox.Size = new Size(274, 28);
+            serverComboBox.TabIndex = 5;
+            serverComboBox.SelectedIndexChanged += ServerComboBox_SelectedIndexChanged;
+            // 
+            // openOsuFolderButton
+            // 
+            openOsuFolderButton.Location = new Point(215, 34);
+            openOsuFolderButton.Name = "openOsuFolderButton";
+            openOsuFolderButton.Size = new Size(68, 27);
+            openOsuFolderButton.TabIndex = 11;
+            openOsuFolderButton.Text = "開く";
+            openOsuFolderButton.UseVisualStyleBackColor = true;
+            openOsuFolderButton.Click += OpenOsuFolderButton_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
+            label6.Location = new Point(9, 144);
+            label6.Name = "label6";
+            label6.Size = new Size(119, 21);
+            label6.TabIndex = 16;
+            label6.Text = "Songs フォルダー";
+            // 
+            // songsFolderTextBox
+            // 
+            songsFolderTextBox.Font = new Font("Yu Gothic UI", 11F);
+            songsFolderTextBox.Location = new Point(9, 168);
+            songsFolderTextBox.Name = "songsFolderTextBox";
+            songsFolderTextBox.PasswordChar = '*';
+            songsFolderTextBox.Size = new Size(200, 27);
+            songsFolderTextBox.TabIndex = 15;
+            songsFolderTextBox.TextChanged += SongsFolderTextBox_TextChanged;
             // 
             // profileComboBox
             // 
             profileComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            profileComboBox.Font = new Font("Yu Gothic UI", 12F);
+            profileComboBox.Font = new Font("Yu Gothic UI", 14F);
             profileComboBox.FormattingEnabled = true;
-            profileComboBox.Location = new Point(12, 363);
+            profileComboBox.Location = new Point(415, 518);
             profileComboBox.Name = "profileComboBox";
-            profileComboBox.Size = new Size(250, 29);
+            profileComboBox.Size = new Size(256, 33);
             profileComboBox.TabIndex = 3;
             profileComboBox.SelectedIndexChanged += ProfileComboBox_SelectedIndexChanged;
             // 
@@ -86,111 +273,18 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold);
-            label2.Location = new Point(12, 332);
+            label2.Location = new Point(308, 518);
             label2.Name = "label2";
             label2.Size = new Size(101, 28);
             label2.TabIndex = 4;
             label2.Text = "プロファイル";
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            label3.Location = new Point(12, 248);
-            label3.Name = "label3";
-            label3.Size = new Size(72, 28);
-            label3.TabIndex = 6;
-            label3.Text = "サーバー";
-            // 
-            // serverComboBox
-            // 
-            serverComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            serverComboBox.Font = new Font("Yu Gothic UI", 12F);
-            serverComboBox.FormattingEnabled = true;
-            serverComboBox.Location = new Point(12, 279);
-            serverComboBox.Name = "serverComboBox";
-            serverComboBox.Size = new Size(250, 29);
-            serverComboBox.TabIndex = 5;
-            serverComboBox.SelectedIndexChanged += ServerComboBox_SelectedIndexChanged;
-            // 
-            // generateServer
-            // 
-            generateServer.Font = new Font("Yu Gothic UI", 9F);
-            generateServer.Location = new Point(268, 279);
-            generateServer.Name = "generateServer";
-            generateServer.Size = new Size(84, 29);
-            generateServer.TabIndex = 7;
-            generateServer.Text = "新規作成";
-            generateServer.UseVisualStyleBackColor = true;
-            generateServer.Click += GenerateServer_Click;
-            // 
-            // generateProfile
-            // 
-            generateProfile.Font = new Font("Yu Gothic UI", 9F);
-            generateProfile.Location = new Point(268, 363);
-            generateProfile.Name = "generateProfile";
-            generateProfile.Size = new Size(84, 29);
-            generateProfile.TabIndex = 8;
-            generateProfile.Text = "新規作成";
-            generateProfile.UseVisualStyleBackColor = true;
-            generateProfile.Click += GenerateProfile_Click;
-            // 
-            // osuFolderTextBox
-            // 
-            osuFolderTextBox.Font = new Font("Yu Gothic UI", 11F);
-            osuFolderTextBox.Location = new Point(12, 64);
-            osuFolderTextBox.Name = "osuFolderTextBox";
-            osuFolderTextBox.Size = new Size(250, 27);
-            osuFolderTextBox.TabIndex = 9;
-            osuFolderTextBox.TextChanged += OsuFolderTextBox_TextChanged;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
-            label4.Location = new Point(12, 40);
-            label4.Name = "label4";
-            label4.Size = new Size(105, 21);
-            label4.TabIndex = 10;
-            label4.Text = "osu! フォルダー";
-            // 
-            // openOsuFolderButton
-            // 
-            openOsuFolderButton.Location = new Point(268, 64);
-            openOsuFolderButton.Name = "openOsuFolderButton";
-            openOsuFolderButton.Size = new Size(84, 27);
-            openOsuFolderButton.TabIndex = 11;
-            openOsuFolderButton.Text = "開く";
-            openOsuFolderButton.UseVisualStyleBackColor = true;
-            openOsuFolderButton.Click += OpenOsuFolderButton_Click;
-            // 
-            // removeButton
-            // 
-            removeButton.Font = new Font("Yu Gothic UI Semibold", 13F, FontStyle.Bold);
-            removeButton.Location = new Point(358, 437);
-            removeButton.Name = "removeButton";
-            removeButton.Size = new Size(294, 42);
-            removeButton.TabIndex = 12;
-            removeButton.Text = "削除";
-            removeButton.UseVisualStyleBackColor = true;
-            removeButton.Click += RemoveButton_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold, GraphicsUnit.Point, 128);
-            label5.Location = new Point(358, 40);
-            label5.Name = "label5";
-            label5.Size = new Size(86, 28);
-            label5.TabIndex = 13;
-            label5.Text = "プロパティ";
-            // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu, generateServerMenu, generateProfileMenu, removeMenu });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(664, 24);
+            menuStrip1.Size = new Size(1079, 24);
             menuStrip1.TabIndex = 14;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -213,52 +307,68 @@
             selectServerMenu.Size = new Size(186, 22);
             selectServerMenu.Text = "サーバープロファイル選択";
             // 
-            // openSongsFolderButton
+            // generateServerMenu
             // 
-            openSongsFolderButton.Location = new Point(268, 127);
-            openSongsFolderButton.Name = "openSongsFolderButton";
-            openSongsFolderButton.Size = new Size(84, 27);
-            openSongsFolderButton.TabIndex = 17;
-            openSongsFolderButton.Text = "開く";
-            openSongsFolderButton.UseVisualStyleBackColor = true;
-            openSongsFolderButton.Click += OpenSongsFolderButton_Click;
+            generateServerMenu.Name = "generateServerMenu";
+            generateServerMenu.Size = new Size(113, 20);
+            generateServerMenu.Text = "サーバーの新規作成";
+            generateServerMenu.Click += GenerateServer_Click;
             // 
-            // label6
+            // generateProfileMenu
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
-            label6.Location = new Point(12, 103);
-            label6.Name = "label6";
-            label6.Size = new Size(193, 21);
-            label6.TabIndex = 16;
-            label6.Text = "Songs フォルダー (デフォルト)";
+            generateProfileMenu.Name = "generateProfileMenu";
+            generateProfileMenu.Size = new Size(129, 20);
+            generateProfileMenu.Text = "プロファイルの新規作成";
+            generateProfileMenu.Click += GenerateProfile_Click;
             // 
-            // songsFolderTextBox
+            // removeMenu
             // 
-            songsFolderTextBox.Font = new Font("Yu Gothic UI", 11F);
-            songsFolderTextBox.Location = new Point(12, 127);
-            songsFolderTextBox.Name = "songsFolderTextBox";
-            songsFolderTextBox.Size = new Size(250, 27);
-            songsFolderTextBox.TabIndex = 15;
-            songsFolderTextBox.TextChanged += SongsFolderTextBox_TextChanged;
+            removeMenu.DropDownItems.AddRange(new ToolStripItem[] { removeProfileButton, removeServerButton });
+            removeMenu.Name = "removeMenu";
+            removeMenu.Size = new Size(43, 20);
+            removeMenu.Text = "削除";
+            // 
+            // removeProfileButton
+            // 
+            removeProfileButton.Name = "removeProfileButton";
+            removeProfileButton.Size = new Size(126, 22);
+            removeProfileButton.Text = "プロファイル";
+            removeProfileButton.Click += RemoveProfileButton_Click;
+            // 
+            // removeServerButton
+            // 
+            removeServerButton.Name = "removeServerButton";
+            removeServerButton.Size = new Size(126, 22);
+            removeServerButton.Text = "サーバー";
+            removeServerButton.Click += RemoveServerButton_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Yu Gothic UI Semibold", 13F, FontStyle.Bold);
+            label1.Location = new Point(308, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(243, 25);
+            label1.TabIndex = 19;
+            label1.Text = "サーバー / プロファイル編集パネル";
+            // 
+            // profileSettingsPanel
+            // 
+            profileSettingsPanel.AutoScroll = true;
+            profileSettingsPanel.BackColor = SystemColors.Control;
+            profileSettingsPanel.BorderStyle = BorderStyle.FixedSingle;
+            profileSettingsPanel.Location = new Point(301, 52);
+            profileSettingsPanel.Name = "profileSettingsPanel";
+            profileSettingsPanel.Size = new Size(778, 445);
+            profileSettingsPanel.TabIndex = 18;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(664, 487);
-            Controls.Add(openSongsFolderButton);
-            Controls.Add(label6);
-            Controls.Add(songsFolderTextBox);
-            Controls.Add(label5);
-            Controls.Add(removeButton);
-            Controls.Add(openOsuFolderButton);
-            Controls.Add(label4);
-            Controls.Add(osuFolderTextBox);
-            Controls.Add(generateProfile);
-            Controls.Add(generateServer);
-            Controls.Add(label3);
-            Controls.Add(serverComboBox);
+            ClientSize = new Size(1079, 573);
+            Controls.Add(label1);
+            Controls.Add(profileSettingsPanel);
             Controls.Add(label2);
             Controls.Add(profileComboBox);
             Controls.Add(settingsPanels);
@@ -269,8 +379,10 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "osu! Bridge - Form Edition v1.0";
+            Text = "osu! Bridge - GUI Edition";
             FormClosing += MainForm_FormClosing;
+            settingsPanels.ResumeLayout(false);
+            settingsPanels.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -283,15 +395,10 @@
         private Panel settingsPanels;
         private ComboBox profileComboBox;
         private Label label2;
-        private Label label3;
         private ComboBox serverComboBox;
-        private Button generateServer;
-        private Button generateProfile;
         private TextBox osuFolderTextBox;
         private Label label4;
         private Button openOsuFolderButton;
-        private Button removeButton;
-        private Label label5;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem toolMenu;
         private ToolStripMenuItem selectSkinMenu;
@@ -299,5 +406,20 @@
         private Button openSongsFolderButton;
         private Label label6;
         private TextBox songsFolderTextBox;
+        private Label label1;
+        private Panel profileSettingsPanel;
+        private ToolStripMenuItem generateServerMenu;
+        private ToolStripMenuItem generateProfileMenu;
+        private ToolStripMenuItem removeMenu;
+        private ToolStripMenuItem removeProfileButton;
+        private ToolStripMenuItem removeServerButton;
+        private Label label5;
+        private CheckBox lazerModeCheckbox;
+        private Label label3;
+        private TextBox osuLazerFolderTextBox;
+        private Button openOsuLazerFolderButton;
+        private CheckBox showOsuFolderPath;
+        private CheckBox showOsuLazerFolderPath;
+        private CheckBox showSongsFolderPath;
     }
 }

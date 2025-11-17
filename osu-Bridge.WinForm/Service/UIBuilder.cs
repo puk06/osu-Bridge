@@ -1,4 +1,5 @@
 ﻿using osu_Bridge.Core.Attributes;
+using osu_Bridge.Core.Attributes.Lazer;
 using System.Reflection;
 
 namespace osu_Bridge.WinForm.Service;
@@ -7,7 +8,7 @@ internal static class UIBuilder
 {
     private static readonly Font TitleFont = new("Yu Gothic UI", 11F, FontStyle.Bold);
 
-    internal static void BuildUI(Control parent, object? target)
+    internal static void BuildUI(Control parent, object? target, bool isLazerMode)
     {
         parent.Controls.Clear();
         if (target == null) return;
@@ -53,6 +54,12 @@ internal static class UIBuilder
                 Location = new Point(10, y + 3),
                 AutoSize = true
             };
+
+            if (isLazerMode && Attribute.IsDefined(prop, typeof(LazerNotSupported)))
+            {
+                label.Text += " (非対応)";
+            }
+
             parent.Controls.Add(label);
 
             Control input;
