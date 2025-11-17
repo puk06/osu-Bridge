@@ -11,7 +11,6 @@ internal static class Program
     [STAThread]
     static void Main()
     {
-        // 相対パスを取得し、カレントディレクトリを設定
         var currentDirectory = Path.GetDirectoryName(Process.GetCurrentProcess()?.MainModule?.FileName);
         if (currentDirectory != null) Directory.SetCurrentDirectory(currentDirectory);
 
