@@ -48,12 +48,12 @@ class Program
                 case "save": SaveCommand(osuBridge); break;
                 case "edit": EditCommand(osuBridge, parts); break;
                 case "remove": RemoveCommand(osuBridge, parts); break;
-                default: Console.WriteLine("Unknown command: " + command); break;
+                default: Console.WriteLine("Unknown command: " + parts[0]); break;
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Command Error!" + ex);
+            Console.WriteLine("Command Error!\nError: {0}", ex);
         }
     }
 
