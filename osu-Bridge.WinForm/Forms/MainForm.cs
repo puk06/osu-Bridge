@@ -109,12 +109,18 @@ public partial class MainForm : Form
 
     private void GenerateServer_Click(object sender, EventArgs e)
     {
+        var result = MessageBox.Show("サーバーを新しく作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+        if (result != DialogResult.Yes) return;
+
         int index = osuBridge.CreateServer();
         if (index != -1) osuBridge.SelectServer(index);
         RefleshData(true);
     }
     private void GenerateProfile_Click(object sender, EventArgs e)
     {
+        var result = MessageBox.Show("プロファイルを新しく作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+        if (result != DialogResult.Yes) return;
+
         int index = osuBridge.CreateProfile();
         if (index != -1) osuBridge.SelectProfile(index);
         RefleshData(true);
@@ -125,7 +131,9 @@ public partial class MainForm : Form
         if (osuBridge.SelectedProfile == null) return;
 
         var result = MessageBox.Show(string.Format("このプロファイルを削除しますか？\nプロファイル名: {0}", osuBridge.SelectedProfile.ProfileName), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-        if (result == DialogResult.Yes) osuBridge.RemoveProfile(osuBridge.SelectedProfileIndex);
+        if (result != DialogResult.Yes) return;
+
+        osuBridge.RemoveProfile(osuBridge.SelectedProfileIndex);
         RefleshData(true);
     }
     private void RemoveServerButton_Click(object sender, EventArgs e)
@@ -133,7 +141,9 @@ public partial class MainForm : Form
         if (osuBridge.SelectedServer == null) return;
 
         var result = MessageBox.Show(string.Format("このサーバーを削除しますか？\nサーバープロファイル名: {0}", osuBridge.SelectedServer.Name), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-        if (result == DialogResult.Yes) osuBridge.RemoveServer(osuBridge.SelectedServerIndex);
+        if (result != DialogResult.Yes) return;
+
+        osuBridge.RemoveServer(osuBridge.SelectedServerIndex);
         RefleshData(true);
     }
 
