@@ -56,60 +56,64 @@ internal static class UIBuilder
             };
 
             if (isLazerMode && Attribute.IsDefined(prop, typeof(LazerNotSupported)))
-            {
                 label.Text += " (非対応)";
-            }
 
             parent.Controls.Add(label);
 
-            Control input;
-
-            if (prop.PropertyType == typeof(bool))
-            {
-                input = new CheckBox()
-                {
-                    Checked = (bool)prop.GetValue(target)!,
-                    Location = new Point(150, y)
-                };
-                ((CheckBox)input).CheckedChanged += (s, e) => OnCheckboxPropertyChanged((CheckBox)input, prop, target);
-            }
-            else if (prop.GetCustomAttributes(typeof(ChoiceAttribute), false).FirstOrDefault() is ChoiceAttribute choiceAttr)
-            {
-                input = new ComboBox()
-                {
-                    Location = new Point(150, y),
-                    DropDownStyle = ComboBoxStyle.DropDownList,
-                    Width = parent.Width - 180
-                };
-                ((ComboBox)input).Items.AddRange(choiceAttr.Choices);
-
-                if (((ComboBox)input).Items.IndexOf(prop.GetValue(target)) != -1) ((ComboBox)input).SelectedIndex = ((ComboBox)input).Items.IndexOf(prop.GetValue(target));
-                else if (((ComboBox)input).Items.Count > 0) ((ComboBox)input).SelectedIndex = 0;
-
-                ((ComboBox)input).SelectedIndexChanged += (s, e) => OnComboBoxPropertyChanged((ComboBox)input, prop, target);
-            }
-            else
-            {
-                input = new TextBox()
-                {
-                    Text = prop.GetValue(target)?.ToString(),
-                    Location = new Point(150, y),
-                    Width = parent.Width - 180
-                };
-
-                if (Attribute.IsDefined(prop, typeof(ConfidentialAttribute))) ((TextBox)input).PasswordChar = '*';
-                if (prop.GetCustomAttributes(typeof(PlaceHolderAttribute), false).FirstOrDefault() is PlaceHolderAttribute placeHolderAttribute)
-                {
-                    ((TextBox)input).PlaceholderText = placeHolderAttribute.PlaceHolderText;
-                }
-
-                ((TextBox)input).TextChanged += (s, e) => OnTextPropertyChanged((TextBox)input, prop, target);
-            }
-
+            Control input = GenerateUIField(parent, target, prop, y);
             parent.Controls.Add(input);
 
             y += 30;
         }
+    }
+
+    private static Control GenerateUIField(Control parentControl, object targetbject, PropertyInfo property, int currentY)
+    {
+        Control input;
+
+        if (property.PropertyType == typeof(bool))
+        {
+            input = new CheckBox()
+            {
+                Checked = (bool)property.GetValue(targetbject)!,
+                Location = new Point(150, currentY)
+            };
+            ((CheckBox)input).CheckedChanged += (s, e) => OnCheckboxPropertyChanged((CheckBox)input, property, targetbject);
+        }
+        else if (property.GetCustomAttributes(typeof(ChoiceAttribute), false).FirstOrDefault() is ChoiceAttribute choiceAttr)
+        {
+            input = new ComboBox()
+            {
+                Location = new Point(150, currentY),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Width = parentControl.Width - 180
+            };
+            ((ComboBox)input).Items.AddRange(choiceAttr.Choices);
+
+            if (((ComboBox)input).Items.IndexOf(property.GetValue(targetbject)) != -1) ((ComboBox)input).SelectedIndex = ((ComboBox)input).Items.IndexOf(property.GetValue(targetbject));
+            else if (((ComboBox)input).Items.Count > 0) ((ComboBox)input).SelectedIndex = 0;
+
+            ((ComboBox)input).SelectedIndexChanged += (s, e) => OnComboBoxPropertyChanged((ComboBox)input, property, targetbject);
+        }
+        else
+        {
+            input = new TextBox()
+            {
+                Text = property.GetValue(targetbject)?.ToString(),
+                Location = new Point(150, currentY),
+                Width = parentControl.Width - 180
+            };
+
+            if (Attribute.IsDefined(property, typeof(ConfidentialAttribute))) ((TextBox)input).PasswordChar = '*';
+            if (property.GetCustomAttributes(typeof(PlaceHolderAttribute), false).FirstOrDefault() is PlaceHolderAttribute placeHolderAttribute)
+            {
+                ((TextBox)input).PlaceholderText = placeHolderAttribute.PlaceHolderText;
+            }
+
+            ((TextBox)input).TextChanged += (s, e) => OnTextPropertyChanged((TextBox)input, property, targetbject);
+        }
+
+        return input;
     }
 
     #region イベントハンドラー
