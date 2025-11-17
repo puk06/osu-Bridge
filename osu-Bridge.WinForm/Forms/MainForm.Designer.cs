@@ -229,9 +229,9 @@
             label6.Font = new Font("Yu Gothic UI Semibold", 12F, FontStyle.Bold);
             label6.Location = new Point(12, 103);
             label6.Name = "label6";
-            label6.Size = new Size(119, 21);
+            label6.Size = new Size(193, 21);
             label6.TabIndex = 16;
-            label6.Text = "Songs フォルダー";
+            label6.Text = "Songs フォルダー (デフォルト)";
             // 
             // songsFolderTextBox
             // 
