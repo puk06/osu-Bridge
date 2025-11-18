@@ -210,7 +210,18 @@ public partial class MainForm : Form
         foreach (var skinName in skinNames)
         {
             var item = selectSkinMenu.DropDownItems.Add(skinName);
-            item.Click += (s, e) => ClipboardUtils.Copy(skinName);
+            item.Click += (s, e) =>
+            {
+                if (osuBridge.SelectedProfile == null)
+                {
+                    MessageBox.Show("プロファイルが選択されていないため、設定に失敗しました。");
+                    return;
+                }
+
+                osuBridge.SelectedProfile.SkinName = skinName;
+                _currentEditMode = EditMode.Profile;
+                GenerateSettingsPanel();
+            };
         }
     }
 
@@ -222,7 +233,18 @@ public partial class MainForm : Form
             if (serverProfileName == null) continue;
 
             var item = selectServerMenu.DropDownItems.Add(serverProfileName);
-            item.Click += (s, e) => ClipboardUtils.Copy(serverProfileName);
+            item.Click += (s, e) =>
+            {
+                if (osuBridge.SelectedProfile == null)
+                {
+                    MessageBox.Show("プロファイルが選択されていないため、設定に失敗しました。");
+                    return;
+                }
+
+                osuBridge.SelectedProfile.ServerProfileName = serverProfileName;
+                _currentEditMode = EditMode.Profile;
+                GenerateSettingsPanel();
+            };
         }
     }
 
