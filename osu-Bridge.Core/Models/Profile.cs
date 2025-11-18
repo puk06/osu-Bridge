@@ -102,7 +102,7 @@ public class Profile
     [ConfigParameter("Height")]
     [UIField("高さ")]
     [DependsOn(nameof(ChangeWindowResolution))]
-    [LazerConfigParameter("WindowedSize", LazerConfigurationType.Framework, "{WindowWidth}x{WindowHeight}")] // 1つの値しか無いため、ここで一緒にWIdthも変更する
+    [LazerConfigParameter("WindowedSize", LazerConfigurationType.Framework, "{WindowWidth}x{WindowHeight}")] // Lazerの解像度の値は1つしか無いため、ここで一緒に変更する
     public int WindowHeight { get; set; } = 900;
 
     [Space(10)]
@@ -117,7 +117,7 @@ public class Profile
     [ConfigParameter("FullScreenHeight")]
     [UIField("高さ")]
     [DependsOn(nameof(ChangeFullScreenResolution))]
-    [LazerConfigParameter("SizeFullscreen", LazerConfigurationType.Framework, "{FullScreenWidth}x{FullScreenHeight}")] // 1つの値しか無いため、ここで一緒にWIdthも変更する
+    [LazerConfigParameter("SizeFullscreen", LazerConfigurationType.Framework, "{FullScreenWidth}x{FullScreenHeight}")] // Lazerの解像度の値は1つしか無いため、ここで一緒に変更する
     public int FullScreenHeight { get; set; } = 1080;
     #endregion
 
