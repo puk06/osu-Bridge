@@ -29,7 +29,7 @@ public partial class OsuBridge(string databasePath)
     public int SelectedProfileIndex => _selectedProfileIndex;
     public int SelectedServerIndex => _selectedServerIndex;
 
-    private const string OSU_PROCESS_NAME = "osu!.exe";
+    private const string OSU_EXECUTABLE_FILE_NAME = "osu!.exe";
     private const string SONGS_DIRECTORY_KEY = "BeatmapDirectory";
 
     private readonly List<Profile> _profiles = [];
@@ -75,7 +75,7 @@ public partial class OsuBridge(string databasePath)
         
         _processStartInfo = new ProcessStartInfo
         {
-            FileName = Path.Combine(osuFolder, OSU_PROCESS_NAME),
+            FileName = Path.Combine(osuFolder, OSU_EXECUTABLE_FILE_NAME),
             WorkingDirectory = osuFolder
         };
     }
@@ -306,23 +306,15 @@ public partial class OsuBridge(string databasePath)
     }
     private void CheckFolderPaths()
     {
-        if (!_lazerMode && !Directory.Exists(_osuFolderPath))
-        {
-            throw new DirectoryNotFoundException("osu! Directory Not Found.");
-        }
-        else if (!_lazerMode && !File.Exists(Path.Join(_osuFolderPath, OSU_PROCESS_NAME)))
-        {
-            throw new FileNotFoundException("osu!.exe File Not Found.");
-        }
+        var osuDirectory = _lazerMode ? _osuLazerFolderPath : _osuFolderPath;
 
-        if (_lazerMode && !Directory.Exists(_osuLazerFolderPath))
-        {
-            throw new DirectoryNotFoundException("osu!Lazer Directory Not Found.");
-        }
-        else if (_lazerMode && !File.Exists(Path.Join(_osuLazerFolderPath, OSU_PROCESS_NAME)))
-        {
+        if (!Directory.Exists(osuDirectory))
+            throw new DirectoryNotFoundException("osu! Directory Not Found.");
+        else if (!File.Exists(Path.Join(osuDirectory, OSU_EXECUTABLE_FILE_NAME)))
             throw new FileNotFoundException("osu!.exe File Not Found.");
-        }
+
+        if (!_lazerMode && !Directory.Exists(_songsFolderPath))
+            throw new DirectoryNotFoundException("Songs Directory Not Found.");
     }
     #endregion
 
