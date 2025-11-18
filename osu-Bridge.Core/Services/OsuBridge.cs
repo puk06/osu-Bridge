@@ -208,7 +208,7 @@ public partial class OsuBridge(string databasePath)
 
         foreach (var property in type.GetProperties())
         {
-            if (property.GetCustomAttributes(typeof(LazerConfigurationAttribute), false).FirstOrDefault() is LazerConfigurationAttribute lazerConfigurationAttribute)
+            if (property.GetCustomAttributes(typeof(LazerConfigParameterAttribute), false).FirstOrDefault() is LazerConfigParameterAttribute lazerConfigurationAttribute)
             {
                 if (property.GetCustomAttributes(typeof(DependsOnAttribute), false).FirstOrDefault() is DependsOnAttribute dependsOnAttribute)
                 {
@@ -221,9 +221,9 @@ public partial class OsuBridge(string databasePath)
 
                 var valueText = value.ToString();
 
-                if (lazerConfigurationAttribute.TextFormat != string.Empty)
+                if (lazerConfigurationAttribute.ParameterFormat != string.Empty)
                 {
-                    valueText = LazerConfigFormatString().Replace(lazerConfigurationAttribute.TextFormat, match =>
+                    valueText = LazerConfigFormatString().Replace(lazerConfigurationAttribute.ParameterFormat, match =>
                     {
                         string propertyName = match.Groups[1].Value;
                         var prop = type.GetProperty(propertyName);
