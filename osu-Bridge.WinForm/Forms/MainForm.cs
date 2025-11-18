@@ -116,6 +116,9 @@ public partial class MainForm : Form
         int index = osuBridge.CreateServer();
         if (index != -1) osuBridge.SelectServer(index);
         RefleshData(true);
+
+        _currentEditMode = EditMode.Server;
+        GenerateSettingsPanel();
     }
     private void GenerateProfile_Click(object sender, EventArgs e)
     {
@@ -125,6 +128,9 @@ public partial class MainForm : Form
         int index = osuBridge.CreateProfile();
         if (index != -1) osuBridge.SelectProfile(index);
         RefleshData(true);
+
+        _currentEditMode = EditMode.Profile;
+        GenerateSettingsPanel();
     }
 
     private void RemoveProfileButton_Click(object sender, EventArgs e)
