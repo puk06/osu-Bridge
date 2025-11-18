@@ -273,7 +273,8 @@ public partial class OsuBridge(string databasePath)
     #region Launch
     public void Launch(Action? beforeLaunch = null, Action? afterLaunch = null)
     {
-        if (_processStartInfo == null) return;
+        if (_processStartInfo == null) throw new Exception("Couldn't find ProcessStartInfo. Load Data or Set osu! Folder.");
+        CheckFolderPaths();
 
         if (SelectedProfile != null)
         {
@@ -302,6 +303,26 @@ public partial class OsuBridge(string databasePath)
         Process.Start(_processStartInfo);
 
         afterLaunch?.Invoke();
+    }
+    private void CheckFolderPaths()
+    {
+        if (!_lazerMode && !Directory.Exists(_osuFolderPath))
+        {
+            throw new DirectoryNotFoundException("osu! Directory Not Found.");
+        }
+        else if (!_lazerMode && !File.Exists(Path.Join(_osuFolderPath, OSU_PROCESS_NAME)))
+        {
+            throw new FileNotFoundException("osu!.exe File Not Found.");
+        }
+
+        if (_lazerMode && !Directory.Exists(_osuLazerFolderPath))
+        {
+            throw new DirectoryNotFoundException("osu!Lazer Directory Not Found.");
+        }
+        else if (_lazerMode && !File.Exists(Path.Join(_osuLazerFolderPath, OSU_PROCESS_NAME)))
+        {
+            throw new FileNotFoundException("osu!.exe File Not Found.");
+        }
     }
     #endregion
 

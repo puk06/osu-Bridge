@@ -70,7 +70,7 @@ public partial class MainForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(string.Format("起動に失敗しました。\nエラー: {0}", ex), "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(string.Format("起動に失敗しました。\nエラー: {0}", ex.Message), "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         osuBridge.Save();
