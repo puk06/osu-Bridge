@@ -5,7 +5,7 @@ namespace osu_Bridge.Core.Attributes.Lazer;
 [AttributeUsage(AttributeTargets.Property)]
 public class LazerConfigParameterAttribute(string parameterName, LazerConfigurationType lazerConfigurationType, string parameterFormat = "") : Attribute
 {
-    public string ParameterName { get; set; } = parameterName;
-    public LazerConfigurationType LazerConfigurationType { get; set; } = lazerConfigurationType;
-    public string ParameterFormat { get; set; } = parameterFormat;
+    public string ParameterName { get; } = parameterName;
+    public LazerConfigurationType LazerConfigurationType { get; } = lazerConfigurationType;
+    public string ParameterFormat { get; } = parameterFormat;
 }

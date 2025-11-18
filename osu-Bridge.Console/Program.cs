@@ -1,4 +1,4 @@
-﻿using osu_Bridge.Core.Services;
+﻿using osu_Bridge.Core;
 using osu_Bridge.Core.Utils;
 
 class Program

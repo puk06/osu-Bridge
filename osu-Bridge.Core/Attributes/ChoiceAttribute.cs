@@ -3,5 +3,5 @@
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 public class ChoiceAttribute(string[] choices) : Attribute
 {
-    public string[] Choices { get; set; } = choices;
+    public string[] Choices { get; } = choices;
 }

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace osu_Bridge.Core.Services;
+namespace osu_Bridge.Core;
 
 public partial class OsuBridge(string databasePath)
 {
