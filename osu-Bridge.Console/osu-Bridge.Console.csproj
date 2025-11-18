@@ -6,6 +6,7 @@
     <RootNamespace>osu_Bridge.Console</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<AssemblyName>osu-Bridge.Console</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

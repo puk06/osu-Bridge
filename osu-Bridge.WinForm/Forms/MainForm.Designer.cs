@@ -379,7 +379,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "osu! Bridge - GUI Edition";
+            Text = "osu! Bridge - WinForm Edition";
             FormClosing += MainForm_FormClosing;
             settingsPanels.ResumeLayout(false);
             settingsPanels.PerformLayout();

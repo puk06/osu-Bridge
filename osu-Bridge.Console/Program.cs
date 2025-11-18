@@ -11,7 +11,7 @@ class Program
         OsuBridge osuBridge = new(databasePath);
         osuBridge.Load();
         
-        Console.WriteLine("osu! Bridge - CUI Edition");
+        Console.WriteLine("osu! Bridge - Console Edition");
         Console.WriteLine("Type 'exit' to quit.\n");
 
         while (true)
