@@ -91,20 +91,21 @@ public class Profile
 
     #region Resolution
     [Title("Resolution")]
-    [UIField("通常を変更する")]
-    public bool ChangeNormalResolution { get; set; } = false;
+    [UIField("ウィンドウを変更する")]
+    public bool ChangeWindowResolution { get; set; } = false;
 
     [ConfigParameter("Width")]
     [UIField("横")]
-    [DependsOn(nameof(ChangeNormalResolution))]
-    public int NormalWidth { get; set; } = 1920;
+    [DependsOn(nameof(ChangeWindowResolution))]
+    public int WindowWidth { get; set; } = 1600;
 
     [ConfigParameter("Height")]
     [UIField("高さ")]
-    [DependsOn(nameof(ChangeNormalResolution))]
-    [LazerConfigParameter("WindowedSize", LazerConfigurationType.Framework, "{NormalWidth}x{NormalHeight}")] // 1つの値しか無いため、ここで一緒にWIdthも変更する
-    public int NormalHeight { get; set; } = 1080;
+    [DependsOn(nameof(ChangeWindowResolution))]
+    [LazerConfigParameter("WindowedSize", LazerConfigurationType.Framework, "{WindowWidth}x{WindowHeight}")] // 1つの値しか無いため、ここで一緒にWIdthも変更する
+    public int WindowHeight { get; set; } = 900;
 
+    [Space(10)]
     [UIField("フルスクリーンを変更する")]
     public bool ChangeFullScreenResolution { get; set; } = false;
 
