@@ -200,8 +200,12 @@ public partial class MainForm : Form
 
     private void GenerateSettingsPanel()
     {
+        var previousScrollValue = profileSettingsPanel.AutoScrollPosition;
+
         if (_currentEditMode == EditMode.Profile) UIBuilder.BuildUI(profileSettingsPanel, osuBridge.SelectedProfile, osuBridge.LazerMode);
         else if (_currentEditMode == EditMode.Server) UIBuilder.BuildUI(profileSettingsPanel, osuBridge.SelectedServer, osuBridge.LazerMode);
+
+        profileSettingsPanel.AutoScrollPosition = new Point(0, -previousScrollValue.Y);
     }
 
     private void GenerateSkinsList(string[] skinNames)
