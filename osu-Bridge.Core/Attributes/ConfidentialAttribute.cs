@@ -4,5 +4,5 @@
 public class ConfidentialAttribute : Attribute
 {
     // 機密情報かどうかを表すものです
-    // コンソールに表示されるときに隠されます
+    // CUIやGUIに表示されるときに隠されます
 }
