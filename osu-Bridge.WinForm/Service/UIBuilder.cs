@@ -7,6 +7,7 @@ namespace osu_Bridge.WinForm.Service;
 internal static class UIBuilder
 {
     private static readonly Font TitleFont = new("Yu Gothic UI", 11F, FontStyle.Bold);
+    private const int FieldHorizontalSpace = 200;
 
     internal static void BuildUI(Control parent, object? target, bool isLazerMode)
     {
@@ -76,7 +77,8 @@ internal static class UIBuilder
             input = new CheckBox()
             {
                 Checked = (bool)property.GetValue(targetbject)!,
-                Location = new Point(150, currentY)
+                Location = new Point(FieldHorizontalSpace, currentY),
+                Width = parentControl.Width - FieldHorizontalSpace - 30
             };
             ((CheckBox)input).CheckedChanged += (s, e) => OnCheckboxPropertyChanged((CheckBox)input, property, targetbject);
         }
@@ -84,10 +86,16 @@ internal static class UIBuilder
         {
             input = new ComboBox()
             {
-                Location = new Point(150, currentY),
+                Location = new Point(FieldHorizontalSpace, currentY),
                 DropDownStyle = ComboBoxStyle.DropDownList,
-                Width = parentControl.Width - 180
+                Width = parentControl.Width - FieldHorizontalSpace - 30
             };
+
+            if (property.GetCustomAttributes(typeof(FieldWidthAttribute), false).FirstOrDefault() is FieldWidthAttribute fieldWidthAttribute)
+            {
+                ((ComboBox)input).Width = fieldWidthAttribute.FieldWidth;
+            }
+
             ((ComboBox)input).Items.AddRange(choiceAttr.Choices);
 
             if (((ComboBox)input).Items.IndexOf(property.GetValue(targetbject)) != -1) ((ComboBox)input).SelectedIndex = ((ComboBox)input).Items.IndexOf(property.GetValue(targetbject));
@@ -100,14 +108,19 @@ internal static class UIBuilder
             input = new TextBox()
             {
                 Text = property.GetValue(targetbject)?.ToString(),
-                Location = new Point(150, currentY),
-                Width = parentControl.Width - 180
+                Location = new Point(FieldHorizontalSpace, currentY),
+                Width = parentControl.Width - FieldHorizontalSpace - 30
             };
 
             if (Attribute.IsDefined(property, typeof(ConfidentialAttribute))) ((TextBox)input).PasswordChar = '*';
             if (property.GetCustomAttributes(typeof(PlaceHolderAttribute), false).FirstOrDefault() is PlaceHolderAttribute placeHolderAttribute)
             {
                 ((TextBox)input).PlaceholderText = placeHolderAttribute.PlaceHolderText;
+            }
+
+            if (property.GetCustomAttributes(typeof(FieldWidthAttribute), false).FirstOrDefault() is FieldWidthAttribute fieldWidthAttribute)
+            {
+                ((TextBox)input).Width = fieldWidthAttribute.FieldWidth;
             }
 
             ((TextBox)input).TextChanged += (s, e) => OnTextPropertyChanged((TextBox)input, property, targetbject);

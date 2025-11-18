@@ -73,6 +73,7 @@ public class Profile
     [ConfigParameter("ScoreMeter")]
     [DependsOn(nameof(ChangeScoreMeter))]
     [Choice([ "None", "Colour", "Hit Error" ])]
+    [FieldWidth(150)]
     [LazerNotSupported]
     public string ScoreMeterType { get; set; } = "None";
     #endregion
