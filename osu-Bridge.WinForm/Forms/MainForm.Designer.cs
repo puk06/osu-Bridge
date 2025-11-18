@@ -261,11 +261,11 @@
             // profileComboBox
             // 
             profileComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            profileComboBox.Font = new Font("Yu Gothic UI", 14F);
+            profileComboBox.Font = new Font("Yu Gothic UI", 12F);
             profileComboBox.FormattingEnabled = true;
-            profileComboBox.Location = new Point(384, 518);
+            profileComboBox.Location = new Point(384, 521);
             profileComboBox.Name = "profileComboBox";
-            profileComboBox.Size = new Size(314, 33);
+            profileComboBox.Size = new Size(314, 29);
             profileComboBox.TabIndex = 3;
             profileComboBox.SelectedIndexChanged += ProfileComboBox_SelectedIndexChanged;
             // 
@@ -359,7 +359,7 @@
             profileSettingsPanel.BorderStyle = BorderStyle.FixedSingle;
             profileSettingsPanel.Location = new Point(270, 52);
             profileSettingsPanel.Name = "profileSettingsPanel";
-            profileSettingsPanel.Size = new Size(802, 445);
+            profileSettingsPanel.Size = new Size(809, 445);
             profileSettingsPanel.TabIndex = 18;
             // 
             // MainForm
