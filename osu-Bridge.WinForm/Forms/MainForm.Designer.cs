@@ -96,14 +96,14 @@
             settingsPanels.Dock = DockStyle.Left;
             settingsPanels.Location = new Point(0, 24);
             settingsPanels.Name = "settingsPanels";
-            settingsPanels.Size = new Size(302, 549);
+            settingsPanels.Size = new Size(271, 549);
             settingsPanels.TabIndex = 1;
             // 
             // showSongsFolderPath
             // 
             showSongsFolderPath.AutoSize = true;
             showSongsFolderPath.Font = new Font("Yu Gothic UI", 10F);
-            showSongsFolderPath.Location = new Point(194, 142);
+            showSongsFolderPath.Location = new Point(164, 142);
             showSongsFolderPath.Name = "showSongsFolderPath";
             showSongsFolderPath.Size = new Size(89, 23);
             showSongsFolderPath.TabIndex = 27;
@@ -115,7 +115,7 @@
             // 
             showOsuFolderPath.AutoSize = true;
             showOsuFolderPath.Font = new Font("Yu Gothic UI", 10F);
-            showOsuFolderPath.Location = new Point(194, 8);
+            showOsuFolderPath.Location = new Point(164, 8);
             showOsuFolderPath.Name = "showOsuFolderPath";
             showOsuFolderPath.Size = new Size(89, 23);
             showOsuFolderPath.TabIndex = 26;
@@ -127,7 +127,7 @@
             // 
             showOsuLazerFolderPath.AutoSize = true;
             showOsuLazerFolderPath.Font = new Font("Yu Gothic UI", 10F);
-            showOsuLazerFolderPath.Location = new Point(194, 71);
+            showOsuLazerFolderPath.Location = new Point(162, 71);
             showOsuLazerFolderPath.Name = "showOsuLazerFolderPath";
             showOsuLazerFolderPath.Size = new Size(89, 23);
             showOsuLazerFolderPath.TabIndex = 25;
@@ -151,13 +151,13 @@
             osuLazerFolderTextBox.Location = new Point(9, 97);
             osuLazerFolderTextBox.Name = "osuLazerFolderTextBox";
             osuLazerFolderTextBox.PasswordChar = '*';
-            osuLazerFolderTextBox.Size = new Size(200, 27);
+            osuLazerFolderTextBox.Size = new Size(170, 27);
             osuLazerFolderTextBox.TabIndex = 22;
             osuLazerFolderTextBox.TextChanged += OsuLazerFolderTextBox_TextChanged;
             // 
             // openOsuLazerFolderButton
             // 
-            openOsuLazerFolderButton.Location = new Point(215, 97);
+            openOsuLazerFolderButton.Location = new Point(185, 97);
             openOsuLazerFolderButton.Name = "openOsuLazerFolderButton";
             openOsuLazerFolderButton.Size = new Size(68, 27);
             openOsuLazerFolderButton.TabIndex = 24;
@@ -203,13 +203,13 @@
             osuFolderTextBox.Location = new Point(9, 34);
             osuFolderTextBox.Name = "osuFolderTextBox";
             osuFolderTextBox.PasswordChar = '*';
-            osuFolderTextBox.Size = new Size(200, 27);
+            osuFolderTextBox.Size = new Size(170, 27);
             osuFolderTextBox.TabIndex = 9;
             osuFolderTextBox.TextChanged += OsuFolderTextBox_TextChanged;
             // 
             // openSongsFolderButton
             // 
-            openSongsFolderButton.Location = new Point(215, 168);
+            openSongsFolderButton.Location = new Point(185, 169);
             openSongsFolderButton.Name = "openSongsFolderButton";
             openSongsFolderButton.Size = new Size(68, 27);
             openSongsFolderButton.TabIndex = 17;
@@ -224,13 +224,13 @@
             serverComboBox.FormattingEnabled = true;
             serverComboBox.Location = new Point(9, 246);
             serverComboBox.Name = "serverComboBox";
-            serverComboBox.Size = new Size(274, 28);
+            serverComboBox.Size = new Size(233, 28);
             serverComboBox.TabIndex = 5;
             serverComboBox.SelectedIndexChanged += ServerComboBox_SelectedIndexChanged;
             // 
             // openOsuFolderButton
             // 
-            openOsuFolderButton.Location = new Point(215, 34);
+            openOsuFolderButton.Location = new Point(185, 34);
             openOsuFolderButton.Name = "openOsuFolderButton";
             openOsuFolderButton.Size = new Size(68, 27);
             openOsuFolderButton.TabIndex = 11;
@@ -254,7 +254,7 @@
             songsFolderTextBox.Location = new Point(9, 168);
             songsFolderTextBox.Name = "songsFolderTextBox";
             songsFolderTextBox.PasswordChar = '*';
-            songsFolderTextBox.Size = new Size(200, 27);
+            songsFolderTextBox.Size = new Size(170, 27);
             songsFolderTextBox.TabIndex = 15;
             songsFolderTextBox.TextChanged += SongsFolderTextBox_TextChanged;
             // 
@@ -263,9 +263,9 @@
             profileComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             profileComboBox.Font = new Font("Yu Gothic UI", 14F);
             profileComboBox.FormattingEnabled = true;
-            profileComboBox.Location = new Point(415, 518);
+            profileComboBox.Location = new Point(384, 518);
             profileComboBox.Name = "profileComboBox";
-            profileComboBox.Size = new Size(256, 33);
+            profileComboBox.Size = new Size(314, 33);
             profileComboBox.TabIndex = 3;
             profileComboBox.SelectedIndexChanged += ProfileComboBox_SelectedIndexChanged;
             // 
@@ -273,7 +273,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Yu Gothic UI Semibold", 15F, FontStyle.Bold);
-            label2.Location = new Point(308, 518);
+            label2.Location = new Point(277, 518);
             label2.Name = "label2";
             label2.Size = new Size(101, 28);
             label2.TabIndex = 4;
@@ -346,7 +346,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Yu Gothic UI Semibold", 13F, FontStyle.Bold);
-            label1.Location = new Point(308, 24);
+            label1.Location = new Point(277, 24);
             label1.Name = "label1";
             label1.Size = new Size(243, 25);
             label1.TabIndex = 19;
@@ -357,9 +357,9 @@
             profileSettingsPanel.AutoScroll = true;
             profileSettingsPanel.BackColor = SystemColors.Control;
             profileSettingsPanel.BorderStyle = BorderStyle.FixedSingle;
-            profileSettingsPanel.Location = new Point(301, 52);
+            profileSettingsPanel.Location = new Point(270, 52);
             profileSettingsPanel.Name = "profileSettingsPanel";
-            profileSettingsPanel.Size = new Size(778, 445);
+            profileSettingsPanel.Size = new Size(802, 445);
             profileSettingsPanel.TabIndex = 18;
             // 
             // MainForm
