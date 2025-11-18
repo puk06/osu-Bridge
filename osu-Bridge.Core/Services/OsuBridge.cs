@@ -239,7 +239,7 @@ public partial class OsuBridge(string databasePath)
                     var parsedValue = double.Parse(valueText!);
                     parsedValue /= 100;
 
-                    valueText = parsedValue.ToString("F1");
+                    valueText = parsedValue.ToString("F2");
                 }
 
                 if (lazerConfigurationAttribute.LazerConfigurationType == LazerConfigurationType.Framework)

@@ -60,6 +60,7 @@ public class Profile
     #region Score Meter
     [Title("Score Meter")]
     [UIField("スコアメーターを変更する")]
+    [LazerNotSupported]
     public bool ChangeScoreMeter { get; set; } = false;
 
     [UIField("サイズ")]
@@ -134,6 +135,7 @@ public class Profile
     #region Server
     [Title("Server")]
     [UIField("サーバーを変更する")]
+    [LazerNotSupported]
     public bool ChangeServer { get; set; } = false;
     
     [UIField("サーバープロファイル")]
@@ -144,6 +146,7 @@ public class Profile
     #region Songs Folder
     [Title("Songs Folder")]
     [UIField("フォルダを変更する")]
+    [LazerNotSupported]
     public bool ChangeSongsFolder { get; set; } = false;
 
     [UIField("フォルダパス")]

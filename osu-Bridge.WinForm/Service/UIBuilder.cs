@@ -21,6 +21,9 @@ internal static class UIBuilder
             if (prop.GetCustomAttributes(typeof(UIFieldAttribute), false).FirstOrDefault() is not UIFieldAttribute attr)
                 continue;
 
+            if (isLazerMode && Attribute.IsDefined(prop, typeof(LazerNotSupported)))
+                continue;
+
             if (prop.GetCustomAttributes(typeof(SpaceAttribute), false).FirstOrDefault() is SpaceAttribute spaceAttr)
                 y += spaceAttr.Space;
 
@@ -54,9 +57,6 @@ internal static class UIBuilder
                 Location = new Point(10, y + 3),
                 AutoSize = true
             };
-
-            if (isLazerMode && Attribute.IsDefined(prop, typeof(LazerNotSupported)))
-                label.Text += " (非対応)";
 
             parent.Controls.Add(label);
 
