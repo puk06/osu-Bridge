@@ -125,6 +125,11 @@ class Program
             osuBridge.SetOsuFolder(args[2]);
             Console.WriteLine("osu! Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuFolderPath);
         }
+        else if (args[1].StartsWith('l'))
+        {
+            osuBridge.SetOsuLazerFolder(args[2]);
+            Console.WriteLine("osu! Lazer Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuLazerFolderPath);
+        }
         else if (args[1].StartsWith('s'))
         {
             osuBridge.SetSongsFolder(args[2]);
