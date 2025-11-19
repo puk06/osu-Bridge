@@ -12,4 +12,14 @@ public class Server
     [ConfigParameter("CredentialEndpoint")]
     [PlaceHolder("Bancho")]
     public string ServerEndpoint { get; set; } = string.Empty;
+
+    public Server()
+    {
+    }
+
+    public Server(Server other)
+    {
+        Name = other.Name + " - コピー";
+        ServerEndpoint = other.ServerEndpoint;
+    }
 }

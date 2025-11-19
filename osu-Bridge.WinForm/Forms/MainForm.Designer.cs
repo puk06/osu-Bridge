@@ -51,11 +51,14 @@
             toolMenu = new ToolStripMenuItem();
             selectSkinMenu = new ToolStripMenuItem();
             selectServerMenu = new ToolStripMenuItem();
-            generateServerMenu = new ToolStripMenuItem();
-            generateProfileMenu = new ToolStripMenuItem();
-            removeMenu = new ToolStripMenuItem();
-            removeProfileButton = new ToolStripMenuItem();
-            removeServerButton = new ToolStripMenuItem();
+            serverMenu = new ToolStripMenuItem();
+            generateServerButton = new ToolStripMenuItem();
+            duplicateServerMenu = new ToolStripMenuItem();
+            removeServerMenu = new ToolStripMenuItem();
+            profileMenu = new ToolStripMenuItem();
+            generateProfileButton = new ToolStripMenuItem();
+            duplicateProfileMenu = new ToolStripMenuItem();
+            removeProfileMenu = new ToolStripMenuItem();
             label1 = new Label();
             profileSettingsPanel = new Panel();
             settingsPanels.SuspendLayout();
@@ -281,7 +284,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu, generateServerMenu, generateProfileMenu, removeMenu });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu, serverMenu, profileMenu });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1079, 24);
@@ -307,40 +310,57 @@
             selectServerMenu.Size = new Size(186, 22);
             selectServerMenu.Text = "サーバープロファイル選択";
             // 
-            // generateServerMenu
+            // serverMenu
             // 
-            generateServerMenu.Name = "generateServerMenu";
-            generateServerMenu.Size = new Size(113, 20);
-            generateServerMenu.Text = "サーバーの新規作成";
-            generateServerMenu.Click += GenerateServer_Click;
+            serverMenu.DropDownItems.AddRange(new ToolStripItem[] { generateServerButton, duplicateServerMenu, removeServerMenu });
+            serverMenu.Name = "serverMenu";
+            serverMenu.Size = new Size(55, 20);
+            serverMenu.Text = "サーバー";
             // 
-            // generateProfileMenu
+            // generateServerButton
             // 
-            generateProfileMenu.Name = "generateProfileMenu";
-            generateProfileMenu.Size = new Size(129, 20);
-            generateProfileMenu.Text = "プロファイルの新規作成";
-            generateProfileMenu.Click += GenerateProfile_Click;
+            generateServerButton.Name = "generateServerButton";
+            generateServerButton.Size = new Size(180, 22);
+            generateServerButton.Text = "新規作成";
+            generateServerButton.Click += GenerateServerButton_Click;
             // 
-            // removeMenu
+            // duplicateServerMenu
             // 
-            removeMenu.DropDownItems.AddRange(new ToolStripItem[] { removeProfileButton, removeServerButton });
-            removeMenu.Name = "removeMenu";
-            removeMenu.Size = new Size(43, 20);
-            removeMenu.Text = "削除";
+            duplicateServerMenu.Name = "duplicateServerMenu";
+            duplicateServerMenu.Size = new Size(180, 22);
+            duplicateServerMenu.Text = "複製";
             // 
-            // removeProfileButton
+            // removeServerMenu
             // 
-            removeProfileButton.Name = "removeProfileButton";
-            removeProfileButton.Size = new Size(126, 22);
-            removeProfileButton.Text = "プロファイル";
-            removeProfileButton.Click += RemoveProfileButton_Click;
+            removeServerMenu.Name = "removeServerMenu";
+            removeServerMenu.Size = new Size(180, 22);
+            removeServerMenu.Text = "削除";
             // 
-            // removeServerButton
+            // profileMenu
             // 
-            removeServerButton.Name = "removeServerButton";
-            removeServerButton.Size = new Size(126, 22);
-            removeServerButton.Text = "サーバー";
-            removeServerButton.Click += RemoveServerButton_Click;
+            profileMenu.DropDownItems.AddRange(new ToolStripItem[] { generateProfileButton, duplicateProfileMenu, removeProfileMenu });
+            profileMenu.Name = "profileMenu";
+            profileMenu.Size = new Size(71, 20);
+            profileMenu.Text = "プロファイル";
+            // 
+            // generateProfileButton
+            // 
+            generateProfileButton.Name = "generateProfileButton";
+            generateProfileButton.Size = new Size(180, 22);
+            generateProfileButton.Text = "新規作成";
+            generateProfileButton.Click += GenerateProfileButton_Click;
+            // 
+            // duplicateProfileMenu
+            // 
+            duplicateProfileMenu.Name = "duplicateProfileMenu";
+            duplicateProfileMenu.Size = new Size(180, 22);
+            duplicateProfileMenu.Text = "複製";
+            // 
+            // removeProfileMenu
+            // 
+            removeProfileMenu.Name = "removeProfileMenu";
+            removeProfileMenu.Size = new Size(180, 22);
+            removeProfileMenu.Text = "削除";
             // 
             // label1
             // 
@@ -408,11 +428,6 @@
         private TextBox songsFolderTextBox;
         private Label label1;
         private Panel profileSettingsPanel;
-        private ToolStripMenuItem generateServerMenu;
-        private ToolStripMenuItem generateProfileMenu;
-        private ToolStripMenuItem removeMenu;
-        private ToolStripMenuItem removeProfileButton;
-        private ToolStripMenuItem removeServerButton;
         private Label label5;
         private CheckBox lazerModeCheckbox;
         private Label label3;
@@ -421,5 +436,13 @@
         private CheckBox showOsuFolderPath;
         private CheckBox showOsuLazerFolderPath;
         private CheckBox showSongsFolderPath;
+        private ToolStripMenuItem serverMenu;
+        private ToolStripMenuItem generateServerButton;
+        private ToolStripMenuItem duplicateServerMenu;
+        private ToolStripMenuItem removeServerMenu;
+        private ToolStripMenuItem profileMenu;
+        private ToolStripMenuItem generateProfileButton;
+        private ToolStripMenuItem duplicateProfileMenu;
+        private ToolStripMenuItem removeProfileMenu;
     }
 }

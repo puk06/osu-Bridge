@@ -108,9 +108,9 @@ public partial class MainForm : Form
         launchButton.Text = osuBridge.LazerMode ? "Launch - Lazer" : "Launch";
     }
 
-    private void GenerateServer_Click(object sender, EventArgs e)
+    private void GenerateServerButton_Click(object sender, EventArgs e)
     {
-        var result = MessageBox.Show("サーバーを新しく作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+        var result = MessageBox.Show("サーバープロファイルを新しく作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
         if (result != DialogResult.Yes) return;
 
         int index = osuBridge.CreateServer();
@@ -120,7 +120,7 @@ public partial class MainForm : Form
         _currentEditMode = EditMode.Server;
         GenerateSettingsPanel();
     }
-    private void GenerateProfile_Click(object sender, EventArgs e)
+    private void GenerateProfileButton_Click(object sender, EventArgs e)
     {
         var result = MessageBox.Show("プロファイルを新しく作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
         if (result != DialogResult.Yes) return;
@@ -131,27 +131,6 @@ public partial class MainForm : Form
 
         _currentEditMode = EditMode.Profile;
         GenerateSettingsPanel();
-    }
-
-    private void RemoveProfileButton_Click(object sender, EventArgs e)
-    {
-        if (osuBridge.SelectedProfile == null) return;
-
-        var result = MessageBox.Show(string.Format("このプロファイルを削除しますか？\nプロファイル名: {0}", osuBridge.SelectedProfile.ProfileName), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-        if (result != DialogResult.Yes) return;
-
-        osuBridge.RemoveProfile(osuBridge.SelectedProfileIndex);
-        RefleshData(true);
-    }
-    private void RemoveServerButton_Click(object sender, EventArgs e)
-    {
-        if (osuBridge.SelectedServer == null) return;
-
-        var result = MessageBox.Show(string.Format("このサーバーを削除しますか？\nサーバープロファイル名: {0}", osuBridge.SelectedServer.Name), "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-        if (result != DialogResult.Yes) return;
-
-        osuBridge.RemoveServer(osuBridge.SelectedServerIndex);
-        RefleshData(true);
     }
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -201,6 +180,9 @@ public partial class MainForm : Form
                 .Select(x => x.ToString())
                 .ToArray()
         );
+
+        GenerateServerToolMenu();
+        GenerateProfileToolMenu();
 #pragma warning restore IDE0305 // コレクションの初期化を簡略化します
     }
 
@@ -232,6 +214,72 @@ public partial class MainForm : Form
                 _currentEditMode = EditMode.Profile;
                 GenerateSettingsPanel();
             };
+        }
+    }
+    
+    private void GenerateServerToolMenu()
+    {
+        removeServerMenu.DropDownItems.Clear();
+        duplicateServerMenu.DropDownItems.Clear();
+
+        for (int i = 0; i < osuBridge.Servers.Count; i++)
+        {
+            string name = osuBridge.Servers[i].Name;
+
+            FormUtils.AddMenuItem(removeServerMenu, name, i,
+                confirmMessage: $"このサーバープロファイルを削除しますか？\nサーバープロファイル名: {name}",
+                action: index =>
+                {
+                    osuBridge.RemoveServer(index);
+                    RefleshData(true);
+                }
+            );
+
+            FormUtils.AddMenuItem(duplicateServerMenu, name, i,
+                confirmMessage: $"このサーバープロファイルを複製しますか？\nサーバープロファイル名: {name}",
+                action: index =>
+                {
+                    int newIndex = osuBridge.DuplicateServer(index);
+                    if (newIndex != -1) osuBridge.SelectServer(newIndex);
+                    RefleshData(true);
+
+                    _currentEditMode = EditMode.Server;
+                    GenerateSettingsPanel();
+                }
+            );
+        }
+    }
+
+    private void GenerateProfileToolMenu()
+    {
+        removeProfileMenu.DropDownItems.Clear();
+        duplicateProfileMenu.DropDownItems.Clear();
+
+        for (int i = 0; i < osuBridge.Profiles.Count; i++)
+        {
+            string name = osuBridge.Profiles[i].ProfileName;
+
+            FormUtils.AddMenuItem(removeProfileMenu, name, i,
+                confirmMessage: $"このプロファイルを削除しますか？\nプロファイル名: {name}",
+                action: index =>
+                {
+                    osuBridge.RemoveProfile(index);
+                    RefleshData(true);
+                }
+            );
+
+            FormUtils.AddMenuItem(duplicateProfileMenu, name, i,
+                confirmMessage: $"このプロファイルを複製しますか？\nプロファイル名: {name}",
+                action: index =>
+                {
+                    int newIndex = osuBridge.DuplicateProfile(index);
+                    if (newIndex != -1) osuBridge.SelectProfile(newIndex);
+                    RefleshData(true);
+
+                    _currentEditMode = EditMode.Profile;
+                    GenerateSettingsPanel();
+                }
+            );
         }
     }
 

@@ -157,4 +157,38 @@ public class Profile
     [LazerNotSupported]
     public string SongsFolderPath { get; set; } = string.Empty;
     #endregion
+
+    public Profile()
+    {
+    }
+
+    public Profile(Profile other)
+    {
+        ProfileName = other.ProfileName + " - コピー";
+        ChangeCredential = other.ChangeCredential;
+        Username = other.Username;
+        Password = other.Password;
+        PasswordAutoCopy = other.PasswordAutoCopy;
+        ChangeAudioVolume = other.ChangeAudioVolume;
+        MasterAudioVolume = other.MasterAudioVolume;
+        MusicAudioVolume = other.MusicAudioVolume;
+        EffectAudioVolume = other.EffectAudioVolume;
+        ChangeScoreMeter = other.ChangeScoreMeter;
+        ScoreMeterScale = other.ScoreMeterScale;
+        ScoreMeterType = other.ScoreMeterType;
+        ChangeOffset = other.ChangeOffset;
+        MasterOffset = other.MasterOffset;
+        ChangeWindowResolution = other.ChangeWindowResolution;
+        WindowWidth = other.WindowWidth;
+        WindowHeight = other.WindowHeight;
+        ChangeFullScreenResolution = other.ChangeFullScreenResolution;
+        FullScreenWidth = other.FullScreenWidth;
+        FullScreenHeight = other.FullScreenHeight;
+        ChangeSkin = other.ChangeSkin;
+        SkinName = other.SkinName;
+        ChangeServer = other.ChangeServer;
+        ServerProfileName = other.ServerProfileName;
+        ChangeSongsFolder = other.ChangeSongsFolder;
+        SongsFolderPath = other.SongsFolderPath;
+    }
 }

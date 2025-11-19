@@ -87,7 +87,14 @@ public partial class OsuBridge(string databasePath)
         var newProfile = new Profile();
         _profiles.Add(newProfile);
 
-        return _profiles.IndexOf(newProfile);
+        return _profiles.Count - 1;
+    }
+    public int DuplicateProfile(int index)
+    {
+        if (!ArrayUtils.IsValidIndex(_profiles.Count, index)) return -1;
+        _profiles.Add(new Profile(_profiles[index]));
+
+        return _profiles.Count - 1;
     }
     public Profile? SelectProfile(int index)
     {
@@ -115,7 +122,14 @@ public partial class OsuBridge(string databasePath)
         var newServer = new Server();
         _servers.Add(newServer);
 
-        return _servers.IndexOf(newServer);
+        return _servers.Count - 1;
+    }
+    public int DuplicateServer(int index)
+    {
+        if (!ArrayUtils.IsValidIndex(_servers.Count, index)) return -1;
+        _servers.Add(new Server(_servers[index]));
+
+        return _servers.Count - 1;
     }
     public Server? SelectServer(int index)
     {
