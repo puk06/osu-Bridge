@@ -50,7 +50,7 @@ class Program
                 case "remove": RemoveCommand(osuBridge, parts); break;
                 case "lazermode": LazerModeCommand(osuBridge); break;
                 case "help": HelpCommand(); break;
-                default: Console.WriteLine("Unknown command: " + parts[0]); break;
+                default: Console.WriteLine($"Unknown command: {parts[0]}\n"); break;
             }
         }
         catch (Exception ex)
