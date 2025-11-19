@@ -41,6 +41,7 @@ class Program
             {
                 case "load": LoadCommand(osuBridge); break;
                 case "create": CreateCommand(osuBridge, parts); break;
+                case "duplicate": DuplicateCommand(osuBridge, parts); break;
                 case "select": SelectCommand(osuBridge, parts); break;
                 case "setfolder": SetFolderCommand(osuBridge, parts); break;
                 case "launch": LaunchCommand(osuBridge); break;
@@ -68,14 +69,46 @@ class Program
         if (args[1].ToLower().StartsWith('p'))
         {
             var profileIndex = osuBridge.CreateProfile();
-            Console.WriteLine("Profile Successfully Created!\nProfile Index: {0}\n", profileIndex);
+            Console.WriteLine("Profile Created!\nProfile Index: {0}\n", profileIndex);
             osuBridge.SelectProfile(profileIndex);
         }
         else if (args[1].ToLower().StartsWith('s'))
         {
             var serverIndex = osuBridge.CreateProfile();
-            Console.WriteLine("Server Successfully Created!\nServer Index: {0}\n", serverIndex);
+            Console.WriteLine("Server Created!\nServer Index: {0}\n", serverIndex);
             osuBridge.SelectServer(serverIndex);
+        }
+    }
+    private static void DuplicateCommand(OsuBridge osuBridge, string[] args)
+    {
+        var targetProfileIndex = int.Parse(args[2]);
+
+        if (args[1].ToLower().StartsWith('p'))
+        {
+            var profileIndex = osuBridge.DuplicateProfile(targetProfileIndex);
+            if (profileIndex != -1)
+            {
+                Console.WriteLine("Profile Duplicated!\nProfile Index: {0}\n", profileIndex);
+                osuBridge.SelectProfile(profileIndex);
+            }
+            else
+            {
+                Console.WriteLine("Profile Duplication Failed...\n");
+            }
+        }
+        else if (args[1].ToLower().StartsWith('s'))
+        {
+            var serverIndex = osuBridge.DuplicateServer(targetProfileIndex);
+            if (serverIndex != -1)
+            {
+                Console.WriteLine("Server Duplicated!\nServer Index: {0}\n", serverIndex);
+                osuBridge.SelectServer(serverIndex);
+
+            }
+            else
+            {
+                Console.WriteLine("Server Duplication Failed...\n");
+            }
         }
     }
     private static void SelectCommand(OsuBridge osuBridge, string[] args)
@@ -92,7 +125,7 @@ class Program
                     return;
                 }
 
-                Console.WriteLine("Profile Successfully Selected!\nProfile Name: {0}\n", profile.ProfileName);
+                Console.WriteLine("Profile Selected!\nProfile Name: {0}\n", profile.ProfileName);
             }
             catch
             {
@@ -111,7 +144,7 @@ class Program
                     return;
                 }
 
-                Console.WriteLine("server Successfully Selected!\nserver Name: {0}\n", server.Name);
+                Console.WriteLine("Server Selected!\nserver Name: {0}\n", server.Name);
             }
             catch
             {
@@ -124,17 +157,17 @@ class Program
         if (args[1].ToLower().StartsWith('o'))
         {
             osuBridge.SetOsuFolder(args[2]);
-            Console.WriteLine("osu! Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuFolderPath);
+            Console.WriteLine("osu! Folder Set!\nFolder Path: {0}\n", osuBridge.OsuFolderPath);
         }
         else if (args[1].ToLower().StartsWith('l'))
         {
             osuBridge.SetOsuLazerFolder(args[2]);
-            Console.WriteLine("osu! Lazer Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.OsuLazerFolderPath);
+            Console.WriteLine("osu! Lazer Folder Set!\nFolder Path: {0}\n", osuBridge.OsuLazerFolderPath);
         }
         else if (args[1].ToLower().StartsWith('s'))
         {
             osuBridge.SetSongsFolder(args[2]);
-            Console.WriteLine("Songs Folder Successfully Set!\nFolder Path: {0}\n", osuBridge.SongsFolderPath);
+            Console.WriteLine("Songs Folder Set!\nFolder Path: {0}\n", osuBridge.SongsFolderPath);
         }
     }
     private static void LaunchCommand(OsuBridge osuBridge)
@@ -155,11 +188,11 @@ class Program
 
             if (result)
             {
-                Console.WriteLine("Profile Successfully Edited!\n");
+                Console.WriteLine("Profile Edited!\n");
             }
             else
             {
-                Console.WriteLine("Profile Edit Failed...!\n");
+                Console.WriteLine("Profile Edit Failed...\n");
             }
         }
         else if (args[1].ToLower().StartsWith('s'))
@@ -168,11 +201,11 @@ class Program
 
             if (result)
             {
-                Console.WriteLine("Server Successfully Edited!\n");
+                Console.WriteLine("Server Edited!\n");
             }
             else
             {
-                Console.WriteLine("Server Edit Failed...!\n");
+                Console.WriteLine("Server Edit Failed...\n");
             }
         }
     }
@@ -184,7 +217,7 @@ class Program
 
             if (result)
             {
-                Console.WriteLine("Profile Successfully Removed!\n");
+                Console.WriteLine("Profile Removed!\n");
             }
             else
             {
@@ -197,7 +230,7 @@ class Program
 
             if (result)
             {
-                Console.WriteLine("Server Successfully Removed!\n");
+                Console.WriteLine("Server Removed!\n");
             }
             else
             {
@@ -213,6 +246,7 @@ class Program
         {
             { "Load", "Load the database configuration from the file" },
             { "Create [p/s]", "Create a new Profile (p) or Server (s) data entry" },
+            { "Duplicate [p/s] [index]", "Duplicate the Profile (p) or Server (s) data at the specified index" },
             { "Select [p/s] [index]", "Select the Profile (p) or Server (s) data at the specified index and set it as the current active entry" },
             { "SetFolder [p/l/s] [path]", "Set the folder path for osu! (p), Lazer (l), or Songs (s) to the specified path" },
             { "Launch", "Launch the osu! game application" },
