@@ -17,6 +17,7 @@ public partial class MainForm : Form
     public MainForm()
     {
         InitializeComponent();
+        Icon = FormIconUtils.GetSoftwareIcon();
 
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         var databasePath = Path.Combine(appDataPath, "osu-Bridge", "database.json");
