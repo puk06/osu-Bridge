@@ -200,6 +200,7 @@ public partial class MainForm : Form
     private void GenerateSkinsList(string[] skinNames)
     {
         selectSkinMenu.DropDownItems.Clear();
+
         foreach (var skinName in skinNames)
         {
             var item = selectSkinMenu.DropDownItems.Add(skinName);
@@ -287,6 +288,7 @@ public partial class MainForm : Form
     private void GenerateServerProfilesList(string?[] serverProfileNames)
     {
         selectServerMenu.DropDownItems.Clear();
+        
         foreach (var serverProfileName in serverProfileNames)
         {
             if (serverProfileName == null) continue;
