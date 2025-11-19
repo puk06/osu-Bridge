@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace osu_Bridge.Core.Utils;
 
-internal class DatabaseUtils
+public class DatabaseUtils
 {
     internal static Database LoadDatabase(string databasePath)
     {
@@ -19,4 +19,7 @@ internal class DatabaseUtils
             return new Database();
         }
     }
+
+    public static string GetDatabasePath(string appDataPath)
+        => Path.Combine(appDataPath, "osu-Bridge", "database.json");
 }

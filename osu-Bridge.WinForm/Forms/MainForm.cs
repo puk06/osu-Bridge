@@ -20,9 +20,8 @@ public partial class MainForm : Form
         Icon = FormIconUtils.GetSoftwareIcon();
 
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        var databasePath = Path.Combine(appDataPath, "osu-Bridge", "database.json");
 
-        osuBridge = new(databasePath);
+        osuBridge = new(DatabaseUtils.GetDatabasePath(appDataPath));
         osuBridge.Load();
 
         RefleshData(true);

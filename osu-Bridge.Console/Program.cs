@@ -6,9 +6,8 @@ class Program
     static void Main()
     {
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        var databasePath = Path.Combine(appDataPath, "osu-Bridge", "database.json");
 
-        OsuBridge osuBridge = new(databasePath);
+        OsuBridge osuBridge = new(DatabaseUtils.GetDatabasePath(appDataPath));
         osuBridge.Load();
         
         Console.WriteLine("osu! Bridge - Console Edition");
