@@ -122,7 +122,6 @@ class Program
             {
                 Console.WriteLine("Server Duplicated!\nServer Index: {0}\n", serverIndex);
                 osuBridge.SelectServer(serverIndex);
-
             }
             else
             {
