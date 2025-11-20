@@ -11,7 +11,8 @@ class Program
         osuBridge.Load();
         
         Console.WriteLine($"osu! Bridge {UpdateUtils.CurrentVersion} - Console Edition");
-        Console.WriteLine("Type 'exit' to quit.\n");
+        Console.WriteLine("Type 'exit' to quit.");
+        Console.WriteLine("Type 'help' to view the list of available commands.\n");
 
         CheckUpdate().Wait();
 
@@ -271,7 +272,8 @@ class Program
             { "Save", "Save the current settings and database to the file" },
             { "Edit [p/s] [key] [value]", "Modify the value of the property key for the currently selected Profile (p) or Server (s)" },
             { "Remove [p/s] [index]", "Delete the Profile (p) or Server (s) data at the specified index" },
-            { "LazerMode", "Toggle the usage mode for the osu! Lazer version (ON/OFF)" }
+            { "LazerMode", "Toggle the usage mode for the osu! Lazer version (ON/OFF)" },
+            { "Update", "Open the latest release page" }
         };
 
         string format = "{0,-25} | {1}";
