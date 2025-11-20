@@ -61,6 +61,26 @@ namespace osu_Bridge.Core.Properties {
         }
         
         /// <summary>
+        ///   https://github.com/puk06/osu-Bridge に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GithubURL {
+            get {
+                return ResourceManager.GetString("GithubURL", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   https://update.pukosrv.net/check/osubridge に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateCheckURL
+        {
+            get
+            {
+                return ResourceManager.GetString("UpdateCheckURL", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
         internal static byte[] Icon {

@@ -10,8 +10,10 @@ class Program
         OsuBridge osuBridge = new(DatabaseUtils.GetDatabasePath(appDataPath));
         osuBridge.Load();
         
-        Console.WriteLine("osu! Bridge - Console Edition");
+        Console.WriteLine($"osu! Bridge {UpdateUtils.CurrentVersion} - Console Edition");
         Console.WriteLine("Type 'exit' to quit.\n");
+
+        CheckUpdate().Wait();
 
         while (true)
         {
@@ -27,6 +29,22 @@ class Program
             }
 
             HandleCommand(input, osuBridge);
+        }
+    }
+
+    private static async Task CheckUpdate()
+    {
+        var (result, latestVersion, changeLog) = await UpdateUtils.CheckUpdate();
+
+        if (result)
+        {
+            Console.WriteLine("A new version of osu! Bridge is available.");
+            Console.WriteLine("Type 'update' to open the latest release page.");
+            Console.WriteLine("");
+            Console.WriteLine($"Version: {UpdateUtils.CurrentVersion} → {latestVersion}");
+            Console.WriteLine("");
+            Console.WriteLine($"ChangeLog:\n{changeLog}");
+            Console.WriteLine("");
         }
     }
 
@@ -49,6 +67,7 @@ class Program
                 case "remove": RemoveCommand(osuBridge, parts); break;
                 case "lazermode": LazerModeCommand(osuBridge); break;
                 case "help": HelpCommand(); break;
+                case "update": UpdateCommand(); break;
                 default: Console.WriteLine($"Unknown command: {parts[0]}\n"); break;
             }
         }
@@ -273,6 +292,11 @@ class Program
     {
         osuBridge.SetLazerMode(!osuBridge.LazerMode);
         Console.WriteLine("Lazer Mode is now {0}!\n", osuBridge.LazerMode);
+    }
+
+    private static void UpdateCommand()
+    {
+        UpdateUtils.OpenGithubURL();
     }
     #endregion
 }

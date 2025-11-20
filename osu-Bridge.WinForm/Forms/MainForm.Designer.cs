@@ -61,6 +61,7 @@
             removeProfileMenu = new ToolStripMenuItem();
             label1 = new Label();
             profileSettingsPanel = new Panel();
+            updateCheck = new ToolStripMenuItem();
             settingsPanels.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -284,7 +285,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu, serverMenu, profileMenu });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolMenu, serverMenu, profileMenu, updateCheck });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1079, 24);
@@ -320,20 +321,20 @@
             // generateServerButton
             // 
             generateServerButton.Name = "generateServerButton";
-            generateServerButton.Size = new Size(180, 22);
+            generateServerButton.Size = new Size(122, 22);
             generateServerButton.Text = "新規作成";
             generateServerButton.Click += GenerateServerButton_Click;
             // 
             // duplicateServerMenu
             // 
             duplicateServerMenu.Name = "duplicateServerMenu";
-            duplicateServerMenu.Size = new Size(180, 22);
+            duplicateServerMenu.Size = new Size(122, 22);
             duplicateServerMenu.Text = "複製";
             // 
             // removeServerMenu
             // 
             removeServerMenu.Name = "removeServerMenu";
-            removeServerMenu.Size = new Size(180, 22);
+            removeServerMenu.Size = new Size(122, 22);
             removeServerMenu.Text = "削除";
             // 
             // profileMenu
@@ -346,20 +347,20 @@
             // generateProfileButton
             // 
             generateProfileButton.Name = "generateProfileButton";
-            generateProfileButton.Size = new Size(180, 22);
+            generateProfileButton.Size = new Size(122, 22);
             generateProfileButton.Text = "新規作成";
             generateProfileButton.Click += GenerateProfileButton_Click;
             // 
             // duplicateProfileMenu
             // 
             duplicateProfileMenu.Name = "duplicateProfileMenu";
-            duplicateProfileMenu.Size = new Size(180, 22);
+            duplicateProfileMenu.Size = new Size(122, 22);
             duplicateProfileMenu.Text = "複製";
             // 
             // removeProfileMenu
             // 
             removeProfileMenu.Name = "removeProfileMenu";
-            removeProfileMenu.Size = new Size(180, 22);
+            removeProfileMenu.Size = new Size(122, 22);
             removeProfileMenu.Text = "削除";
             // 
             // label1
@@ -381,6 +382,13 @@
             profileSettingsPanel.Name = "profileSettingsPanel";
             profileSettingsPanel.Size = new Size(809, 445);
             profileSettingsPanel.TabIndex = 18;
+            // 
+            // updateCheck
+            // 
+            updateCheck.Name = "updateCheck";
+            updateCheck.Size = new Size(102, 20);
+            updateCheck.Text = "アップデートチェック";
+            updateCheck.Click += UpdateCheck_Click;
             // 
             // MainForm
             // 
@@ -444,5 +452,6 @@
         private ToolStripMenuItem generateProfileButton;
         private ToolStripMenuItem duplicateProfileMenu;
         private ToolStripMenuItem removeProfileMenu;
+        private ToolStripMenuItem updateCheck;
     }
 }

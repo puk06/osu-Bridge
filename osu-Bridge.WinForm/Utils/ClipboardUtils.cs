@@ -10,10 +10,10 @@ internal static class ClipboardUtils
         {
             Clipboard.SetText(text);
         }
-        catch (Exception error)
+        catch (Exception ex)
         {
-            if (error is ExternalException) return;
-            MessageBox.Show(string.Format("コピーに失敗しました。\n{0}", error), "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (ex is ExternalException) return;
+            FormUtils.ShowError($"コピーに失敗しました。\nエラー: {ex.Message}");
         }
     }
 }

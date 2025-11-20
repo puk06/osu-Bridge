@@ -18,6 +18,7 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         Icon = FormIconUtils.GetSoftwareIcon();
+        Text = $"osu! Bridge {UpdateUtils.CurrentVersion} - WinForm Edition";
 
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
@@ -25,6 +26,7 @@ public partial class MainForm : Form
         osuBridge.Load();
 
         RefleshData(true);
+        _ = CheckUpdate(true);
     }
 
     #region イベントハンドラー
@@ -70,7 +72,7 @@ public partial class MainForm : Form
         }
         catch (Exception ex)
         {
-            MessageBox.Show(string.Format("起動に失敗しました。\nエラー: {0}", ex.Message), "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FormUtils.ShowError($"起動に失敗しました。\nエラー: {ex.Message}");
         }
 
         osuBridge.Save();
@@ -103,15 +105,15 @@ public partial class MainForm : Form
     {
         osuBridge.SetLazerMode(lazerModeCheckbox.Checked);
         GenerateSettingsPanel();
-        
+
         serverComboBox.Enabled = !osuBridge.LazerMode;
         launchButton.Text = osuBridge.LazerMode ? "Launch - Lazer" : "Launch";
     }
 
     private void GenerateServerButton_Click(object sender, EventArgs e)
     {
-        var result = MessageBox.Show("サーバープロファイルを新しく作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-        if (result != DialogResult.Yes) return;
+        var result = FormUtils.ShowConfirm("サーバープロファイルを新しく作成しますか？");
+        if (!result) return;
 
         int index = osuBridge.CreateServer();
         if (index != -1) osuBridge.SelectServer(index);
@@ -122,8 +124,8 @@ public partial class MainForm : Form
     }
     private void GenerateProfileButton_Click(object sender, EventArgs e)
     {
-        var result = MessageBox.Show("プロファイルを新しく作成しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-        if (result != DialogResult.Yes) return;
+        var result = FormUtils.ShowConfirm("プロファイルを新しく作成しますか？");
+        if (!result) return;
 
         int index = osuBridge.CreateProfile();
         if (index != -1) osuBridge.SelectProfile(index);
@@ -207,7 +209,7 @@ public partial class MainForm : Form
             {
                 if (osuBridge.SelectedProfile == null)
                 {
-                    MessageBox.Show("プロファイルが選択されていないため、設定に失敗しました。");
+                    FormUtils.ShowError("プロファイルが選択されていないため、設定に失敗しました。");
                     return;
                 }
 
@@ -217,7 +219,7 @@ public partial class MainForm : Form
             };
         }
     }
-    
+
     private void GenerateServerToolMenu()
     {
         removeServerMenu.DropDownItems.Clear();
@@ -287,7 +289,7 @@ public partial class MainForm : Form
     private void GenerateServerProfilesList(string?[] serverProfileNames)
     {
         selectServerMenu.DropDownItems.Clear();
-        
+
         foreach (var serverProfileName in serverProfileNames)
         {
             if (serverProfileName == null) continue;
@@ -297,7 +299,7 @@ public partial class MainForm : Form
             {
                 if (osuBridge.SelectedProfile == null)
                 {
-                    MessageBox.Show("プロファイルが選択されていないため、設定に失敗しました。");
+                    FormUtils.ShowError("プロファイルが選択されていないため、設定に失敗しました。");
                     return;
                 }
 
@@ -323,4 +325,47 @@ public partial class MainForm : Form
         return skins.ToArray();
 #pragma warning restore IDE0305 // コレクションの初期化を簡略化します
     }
+
+    private async Task CheckUpdate(bool silent = false)
+    {
+        var updateResult = await UpdateUtils.CheckUpdate();
+        if (updateResult.result) updateCheck.BackColor = Color.LightGreen;
+
+        if (silent) return;
+
+        if (updateResult.result)
+        {
+            bool result = FormUtils.ShowConfirm(
+                "新しいosu! Bridgeのバージョンが利用可能です！\n\n" +
+                "「はい」をクリックすると最新のリリースページを開きます。\n\n" +
+                $"現在のバージョン: {UpdateUtils.CurrentVersion}\n" +
+                $"最新のバージョン: {updateResult.latestVersion}\n\n" +
+                $"以下は最新版（{updateResult.latestVersion}）の変更内容です。\n\n" +
+                updateResult.changeLog
+            );
+            if (!result) return;
+
+            try
+            {
+                UpdateUtils.OpenGithubURL();
+            }
+            catch
+            {
+                FormUtils.ShowError("リンクを開くことができませんでした");
+            }
+        }
+        else
+        {
+            FormUtils.ShowInfo(
+                "ご利用中のosu! Bridgeは最新版です！\n\n" +
+                "いつもご利用いただき、ありがとうございます。\n" +
+                "今後のアップデートもぜひお楽しみに！\n\n" +
+                $"以下は最新版（{updateResult.latestVersion}）の変更内容です。\n\n" +
+                updateResult.changeLog
+            );
+        }
+    }
+
+    private async void UpdateCheck_Click(object sender, EventArgs e)
+        => await CheckUpdate();
 }
