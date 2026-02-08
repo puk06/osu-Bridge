@@ -139,8 +139,6 @@ internal static class UIBuilder
     {
         try
         {
-            if (string.IsNullOrEmpty(textBox.Text)) return;
-
             object value = Convert.ChangeType(textBox.Text, property.PropertyType);
             property.SetValue(target, value);
         }
@@ -154,8 +152,6 @@ internal static class UIBuilder
     {
         try
         {
-            if (string.IsNullOrEmpty(comboBox.Text)) return;
-
             object value = Convert.ChangeType(comboBox.Text, property.PropertyType);
             property.SetValue(target, value);
         }

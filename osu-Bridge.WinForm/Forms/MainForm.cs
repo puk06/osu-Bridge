@@ -10,7 +10,7 @@ namespace osu_Bridge.WinForm.Forms;
 public partial class MainForm : Form
 {
     private const char PATH_CHAR = '*';
-    private readonly OsuBridge osuBridge = null!;
+    private readonly OsuBridge osuBridge;
 
     private EditMode _currentEditMode = EditMode.Profile;
 

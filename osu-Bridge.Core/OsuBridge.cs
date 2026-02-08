@@ -307,7 +307,7 @@ public partial class OsuBridge(string databasePath)
         }
 
         _processStartInfo.Arguments = string.Empty;
-        if (SelectedServer != null && SelectedServer.ServerEndpoint != string.Empty)
+        if (SelectedServer != null && SelectedServer.ServerEndpoint != string.Empty && SelectedServer.ServerEndpoint != "Bancho")
         {
             _processStartInfo.Arguments = "-devserver " + SelectedServer.ServerEndpoint;
         }
@@ -327,7 +327,7 @@ public partial class OsuBridge(string databasePath)
         else if (!File.Exists(Path.Join(osuDirectory, OSU_EXECUTABLE_FILE_NAME)))
             throw new FileNotFoundException("osu!.exe File Not Found.");
 
-        if (!_lazerMode && !Directory.Exists(_songsFolderPath))
+        if (!_lazerMode && _songsFolderPath != "Songs" && !Directory.Exists(_songsFolderPath))
             throw new DirectoryNotFoundException("Songs Directory Not Found.");
     }
     #endregion

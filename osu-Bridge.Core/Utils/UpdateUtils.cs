@@ -4,9 +4,9 @@ using System.Text.Json;
 
 namespace osu_Bridge.Core.Utils;
 
-public class UpdateUtils
+public static class UpdateUtils
 {
-    private const string CURRENT_VERSION = "v1.0.0";
+    private const string CURRENT_VERSION = "v1.0.1";
     private static readonly string GITHUB_URL = Properties.Resources.GithubURL;
     private static readonly string GITHUB_LATEST_URL = Properties.Resources.GithubURL + "/releases/latest";
     private static readonly string UPDATE_CHECK_URL = Properties.Resources.UpdateCheckURL;
