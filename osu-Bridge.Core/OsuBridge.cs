@@ -188,6 +188,12 @@ public partial class OsuBridge(string databasePath)
                 var value = property.GetValue(target);
                 if (value == null) continue;
 
+                if (configParameterAttribute.ParameterName == "CredentialEndpoint" && value.ToString() == "Bancho")
+                {
+                    parameters.Add(configParameterAttribute.ParameterName, string.Empty);
+                    continue;
+                }
+
                 parameters.Add(configParameterAttribute.ParameterName, value.ToString()!);
             }
         }

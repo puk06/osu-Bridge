@@ -6,7 +6,7 @@ namespace osu_Bridge.Core.Utils;
 
 public static class UpdateUtils
 {
-    private const string CURRENT_VERSION = "v1.0.1";
+    private const string CURRENT_VERSION = "v1.0.2";
     private static readonly string GITHUB_URL = Properties.Resources.GithubURL;
     private static readonly string GITHUB_LATEST_URL = Properties.Resources.GithubURL + "/releases/latest";
     private static readonly string UPDATE_CHECK_URL = Properties.Resources.UpdateCheckURL;
